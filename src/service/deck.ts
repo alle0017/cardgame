@@ -27,7 +27,12 @@ export class DeckService {
             model.img = cards.img;
       }
 
-      public getDeck(model: DeckModel) {
-            return Promise.all(model.cards.map(async (card, id) => ({ ...(await this.cards.get(card)), id })))
+      public async getDeck(model: DeckModel) {
+            const promises = model.cards.map(async (card, id) => {
+                  const model = await this.cards.get(card);
+                  return { ...model, id }
+            })
+            const cards = await Promise.all(promises)
+            return cards ?? [];
       }
 }

@@ -8,8 +8,8 @@ export class Router<T extends Record<string, (params: {}) => HTMLElement>> {
             this.signal = new Reactive(home);
       }
       public goto(route: keyof T, params: {} = this.params) {
-            this.signal.value = route;
             this.params = params;
+            this.signal.value = route;
       }
 
       public mount(root = document.body) {

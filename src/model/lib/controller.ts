@@ -33,7 +33,6 @@ export function remote(obj: Topic) {
       });
 }
 export function controller<T extends Topic>(obj: T) {
-      console.log(obj)
       return new Proxy(obj, {
             get(_, p: string | symbol) {
                   const meta = obj as {} as Dispatcher;
@@ -41,7 +40,7 @@ export function controller<T extends Topic>(obj: T) {
                   if (meta.__dispatchers__?.has(key)) {
                         return meta.__dispatchers__?.get(key);
                   }
-                  return (_ as any)[p];
+                  return Reflect.get(_, p);
             }
       });
 }
