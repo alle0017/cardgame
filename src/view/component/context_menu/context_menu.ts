@@ -4,7 +4,7 @@ import { column, Theme } from "../theme.js";
 
 const { div } = Component;
 
-export type Options = Record<string, (() => void) | undefined>;
+export type Options<T extends {} = {}> = Record<string, ((args: T) => void) | undefined>;
 
 export class ContextMenu {
       private static locked = false;
@@ -17,7 +17,7 @@ export class ContextMenu {
             this.locked = false;
       }
 
-      public static append(root: HTMLElement, options: Options) {
+      public static append(root: HTMLElement, options: Options, ctx: {} = {}) {
             if (this.locked) {
                   return;
             }
@@ -79,7 +79,7 @@ export class ContextMenu {
                               },
                               click: () => {
                                     try {
-                                          callback?.();
+                                          callback?.(ctx);
                                     } finally {
                                           menu.remove();
                                           this.unlock();

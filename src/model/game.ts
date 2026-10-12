@@ -1,5 +1,5 @@
 import { Player, LocalPlayer, RemotePlayer } from './player.js';
-import { Stack } from './stack.js';
+import { Stack } from './components/stack.js';
 import { remote, controller } from './lib/controller.js';
 
 export class Shared<T extends Topic> {

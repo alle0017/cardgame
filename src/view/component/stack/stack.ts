@@ -7,11 +7,13 @@ import { column } from "../theme.js";
 
 const { div } = Component;
 
-export function Stack({ model, options }: { model: model.Stack, options: Options }) {
-      return react(() => ContextMenuTrigger(
+export function Stack({ model, options, click }: { model: model.Stack, options?: Options, click?: () => void }) {
+      options ??= {};
+
+      return react(() => ContextMenuTrigger({ options, ctx: { model } },
             div({ style: `align-items: center; justify-content: center; ${column()}` },
-                  Card({ src: model.cards.value.at(0)?.img }),
+                  Card({ src: model.cards.value.at(0)?.img, click }),
             ), 
-            options),
+      ),
       model.cards);
 }

@@ -1,18 +1,35 @@
 import * as model from "../../../model/player.js";
+import * as stack from "../../../model/components/stack.js";
 import { Component } from "../../lib/index.js";
 import { Deck } from "../deck/deck.js";
 import { Hand } from "../hand/hand.js";
 import { Stack } from "../stack/stack.js";
 import { Options } from '../context_menu/context_menu';
 import { column, row } from "../theme.js";
+
 const { div } = Component;
 
-export function Player({ model, graveyard, hand, deck }: { model: model.Player, graveyard: Options, hand?: (card: Card) => void, deck: Options }) {
-      return div({ style: `align-items: end; ${column('20px')}` },
-            Stack({ model: model.graveyard, options: graveyard }),
-            div({ style: row() },
-                  Hand({ model: model.hand, onCardClicked: hand }),
+type Args = { 
+      model: model.Player, 
+      graveyard: Options, 
+      deck: Options 
+      hand: Options, 
+      zones: Options
+      zoneClicked?: (model: stack.Stack) => void, 
+}
+export function Player({ model, graveyard, hand, deck, zones, zoneClicked }: Args) {
+      return div({ style: `${row()}` },
+            div({ style: column('20px') },
+                  div({ style: row() },
+                        ...model.zones.map(zone => 
+                              Stack({ model: zone, click: () => zoneClicked?.(zone), options: zones })
+                        )
+                  ),
+                  Hand({ model: model.hand, options: hand }),
+            ),
+            div({ style: column('20px') },
+                  Stack({ model: model.graveyard, options: graveyard }),
                   Deck({ model: model.deck, options: deck }),
-            )
+            ),
       )
 }
