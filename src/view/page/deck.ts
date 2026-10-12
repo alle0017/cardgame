@@ -6,23 +6,17 @@ import { Component, react, bind } from "../lib/index.js";
 import { Provider } from "../lib/provider.js";
 import { Reactive } from '../../model/lib/reactive.js';
 import { DeckModel } from "../../service/store.js";
+import { DeckSelector } from "../component/deck_selector/deck_selector.js";
 
-const { div, input, button, hr, select, option } = Component;
+const { div, input, button, } = Component;
 
 export function DeckPage() {
       const cards: Reactive<Card[]> = new Reactive([]);
-      const decks: Reactive<Map<string, DeckModel>> = new Reactive(new Map);
       const deck: Reactive<Card[]> = new Reactive([]);
       const name = bind();
 
       Provider.of(DeckService).getAllCards().then(stored => cards.value = stored).catch(console.error);
-      Provider.of(DeckService).getAllDecks().then(stored => {
-            const map: Map<string, DeckModel> = new Map;
-            for (const deck of stored) {
-                  map.set(deck.name, deck);
-            }
-            decks.value = map;
-      }).catch(console.error);
+      
 
       function add(card: Card) {
             deck.value.push(card); 
@@ -32,9 +26,7 @@ export function DeckPage() {
             deck.value.splice(index, 1);
             deck.dispatch();
       }
-      async function loadDeck(e: Event) { 
-            const text = (e.target as HTMLInputElement).value;
-            const model = decks.value.get(text)!;
+      async function loadDeck(model: DeckModel) { 
             const cards = await Provider.of(DeckService).getDeck(model);
             deck.value = cards;
       }
@@ -47,15 +39,7 @@ export function DeckPage() {
       return div({ style: `${column('20px')}` },
             div({ style: `${row('10px')}` },
                   input({ ...name.binding, placeholder: 'insert here the deck name' }),
-                  react(() => 
-                        select({ change: loadDeck },
-                             ...decks.value.keys().map(deck => 
-                                    option({ value: deck }, 
-                                          deck
-                                    )
-                              )
-                        ),
-                  decks),
+                  DeckSelector({ deckSelected: loadDeck }),
                   button({ click: save },
                         'save'
                   )

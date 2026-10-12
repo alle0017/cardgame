@@ -1,4 +1,6 @@
 import { DeckService } from "../../service/deck.js";
+import { DeckModel } from "../../service/store.js";
+import { DeckSelector } from "../component/deck_selector/deck_selector.js";
 import { column, Theme } from "../component/theme.js";
 import { Component, bind } from "../lib/index.js";
 import { Provider } from "../lib/provider.js";
@@ -55,15 +57,18 @@ export function HomePage() {
       const nickname = bind();
       const opponent = bind();
       const game = bind();
+      let deck: DeckModel | undefined;
 
-      function play() {
-            if (!nickname.value.replaceAll(' ', '') || !opponent.value.replaceAll(' ', '') || !game.value.replaceAll(' ', '')) {
+      async function play() {
+            if (!nickname.value.replaceAll(' ', '') || !opponent.value.replaceAll(' ', '') || !game.value.replaceAll(' ', '') || !deck) {
                   return;
             }
+            const cards = await Provider.of(DeckService).getDeck(deck);
             Provider.of(Router).goto('/game', {
                   local: nickname.value.replaceAll(' ', ''),
                   remote: opponent.value.replaceAll(' ', ''),
-                  game: game.value.replaceAll(' ', '')
+                  game: game.value.replaceAll(' ', ''),
+                  deck: cards
             } satisfies GamePageParams);
       }
       return div({ style: `background-color: ${theme.primary}; align-items: center; justify-content: center; border-radius: 7px; width: 500px; padding: 30px; ${column('20px')}` },
@@ -71,6 +76,8 @@ export function HomePage() {
             input({ ...opponent.binding, placeholder: 'insert here the opponent nickname'  }), 
             input({ ...game.binding, placeholder: 'insert here the game password' }), 
 
+            DeckSelector({ deckSelected: model => (deck = model) }),
+            
             hr({ style: "width: 80%;" }),
 
             button({ click: play }, 

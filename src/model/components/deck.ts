@@ -7,7 +7,7 @@ export class Deck extends Stack implements Topic {
       }
 
       @dispatch
-      private useCards(cards: Card[]) {
+      public useCards(cards: Card[]) {
             this.cards.value = cards;
       }
 
