@@ -26,7 +26,7 @@ const StackOptions: Options = {
       exit: undefined
 }
 export function Game({ model }: { model: model.Game }) {
-      return div({ style: `align-items: center; ${column('0px')}` },
+      return div({ style: `align-items: center; ${column('10px')}` },
             RemotePlayer({ model: model.remote }),
             Stack({ model: model.stack, options: StackOptions }),
             LocalPlayer({ model: model.local })

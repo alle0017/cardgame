@@ -20,7 +20,7 @@ type Args = {
 export function Player({ model, graveyard, hand, deck, zones, zoneClicked }: Args) {
       return div({ style: `${row()}` },
             div({ style: column('20px') },
-                  div({ style: row() },
+                  div({ style: `align-items: center; justify-content: center; ${row()}` },
                         ...model.zones.map(zone => 
                               Stack({ model: zone, click: () => zoneClicked?.(zone), options: zones })
                         )
