@@ -24,6 +24,16 @@ export function App() {
             * {
                   background-color: ${Provider.of(Theme).background};
                   color: ${Provider.of(Theme).text};
+                  font-family: system-ui;
+            }
+            details > *, 
+            details > * > *, 
+            details > * > * > *, 
+            details > * > * > * > *, 
+            details > * > * > * > * > *, 
+            details > * > * > * > * > * > *,
+            details > * > * > * > * > * > * > * {
+                  background-color: ${Provider.of(Theme).primary};
             }
             body {
                   display: flex;
@@ -47,9 +57,10 @@ export function App() {
             button:hover {
                   background-color: ${Provider.of(Theme).accentSecondary};
             }     
-            input:focus {
+            input:focus, select:focus {
                   outline: none;
             }
+            
 
       `)
       Provider.of(Router).mount();

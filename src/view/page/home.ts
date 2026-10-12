@@ -1,5 +1,6 @@
 import { DeckService } from "../../service/deck.js";
 import { DeckModel } from "../../service/store.js";
+import { CloudKeyInput } from "../component/cloud_key/cloud_key_input.js";
 import { DeckSelector } from "../component/deck_selector/deck_selector.js";
 import { column, Theme } from "../component/theme.js";
 import { Component, bind } from "../lib/index.js";
@@ -79,7 +80,7 @@ export function HomePage() {
             DeckSelector({ deckSelected: model => (deck = model) }),
             
             hr({ style: "width: 80%;" }),
-
+            CloudKeyInput(),
             button({ click: play }, 
                   'Play'
             ),
