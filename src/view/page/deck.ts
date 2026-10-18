@@ -45,12 +45,12 @@ export function DeckPage() {
                   )
             ),
             div({ style: `${row('10px')}` },
-                  react(() => 
+                  react([deck], () => 
                         Table({ cards: deck.value, click: remove }),
-                  deck),
-                  react(() => 
+                  ),
+                  react([cards], () => 
                         CardSearch({ cards: cards.value, click: add }),
-                  cards)
+                  )
             )
       )
 }

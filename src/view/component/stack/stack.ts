@@ -10,10 +10,10 @@ const { div } = Component;
 export function Stack({ model, options, click }: { model: model.Stack, options?: Options, click?: () => void }) {
       options ??= {};
 
-      return react(() => ContextMenuTrigger({ options, ctx: { model } },
-            div({ style: `align-items: center; justify-content: center; ${column()}` },
-                  Card({ src: model.cards.value.at(0)?.img, click }),
-            ), 
-      ),
-      model.cards);
+      return react([model.cards], () => ContextMenuTrigger({ options, ctx: { model } },
+                  div({ style: `align-items: center; justify-content: center; ${column()}` },
+                        Card({ src: model.cards.value.at(0)?.img, click }),
+                  ), 
+            ),
+      );
 }

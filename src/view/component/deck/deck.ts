@@ -8,11 +8,11 @@ import { column } from "../theme.js";
 const { div } = Component;
 
 export function Deck({ model, options }: { model: model.Deck, options: Options }) {
-      return react(() => ContextMenuTrigger({ options },
+      return react([model.cards], () => ContextMenuTrigger({ options },
                   div({ style: `align-items: center; justify-content: center; ${column()}` },
                         Card({}),
                         `${model.cards.value.length}`
                   ), 
-            ),
-      model.cards);
+            )
+      );
 }

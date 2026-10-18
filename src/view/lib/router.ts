@@ -13,6 +13,6 @@ export class Router<T extends Record<string, (params: {}) => HTMLElement>> {
       }
 
       public mount(root = document.body) {
-            root.append(react(() => this.routes[this.signal.value](this.params), this.signal))
+            root.append(react([this.signal], () => this.routes[this.signal.value](this.params)))
       }     
 }

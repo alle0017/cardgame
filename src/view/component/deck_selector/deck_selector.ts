@@ -24,7 +24,7 @@ export function DeckSelector({ deckSelected }: { deckSelected?: (model: DeckMode
             }
             deckSelected?.(decks.value.get(text)!);
       }
-      return react(() => 
+      return react([decks], () => 
             select({ change },
                   option({ value: '' },
                         'select a deck'
@@ -35,5 +35,5 @@ export function DeckSelector({ deckSelected }: { deckSelected?: (model: DeckMode
                         )
                   )
             ),
-      decks);
+      );
 }

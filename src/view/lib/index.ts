@@ -53,7 +53,7 @@ export const Component: Record<keyof HTMLElementTagNameMap, <T extends {}>(prop:
       }
 });
 
-export function react(component: () => HTMLElement, ...signals: Reactive<unknown>[]) {
+export function react(signals: Reactive<unknown>[], component: () => HTMLElement) {
       let el = component();
       function handler() {
             const replace = component();

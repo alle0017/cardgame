@@ -23,12 +23,12 @@ export function CardSearch({ cards, click }: { cards: Card[], click?: (card: Car
       }
       return div({ style: `${column()}` },
             input({ placeholder: 'type a card name...', input: search  }),
-            react(() => 
+            react([signal], () => 
                   div({ style: `overflow-y: scroll; height: 300px; width: ${Provider.of(view.CardState).width + 20}px; align-items: center; ${column('4px')}` },
                         ...signal.value.map(card => 
                               view.Card({ src: card.img, click: () => click?.(card) })
                         )
                   )
-            , signal)
+            )
       )
 }
