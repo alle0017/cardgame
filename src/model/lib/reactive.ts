@@ -1,4 +1,13 @@
 export class Reactive<T> {
+      public static from(...signals: Reactive<unknown>[]) {
+            const consumer = new Reactive(undefined);
+            const sub = () => consumer.dispatch()
+
+            for (const signal of signals) {
+                  signal.subscribe(sub);
+            }
+            return consumer;
+      }
       private readonly subscribers: Set<() => void> = new Set;
       constructor(private _value: T) {}
 
@@ -6,8 +15,10 @@ export class Reactive<T> {
             return this._value;
       }
       public set value(v: T) {
-            this._value = v;
-            this.dispatch();
+            if (this._value != v) {
+                  this._value = v;
+                  this.dispatch();
+            }
       }
 
       public dispatch() {
