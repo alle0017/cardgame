@@ -21,10 +21,11 @@ export class DeckService {
             return this.decks.insertOrUpdate(model);
       }
 
-      public createCard(cards: Card) {
+      public async createCard(cards: Card) {
             const model = new CardModel();
             model.name = cards.name;
             model.img = cards.img;
+            await this.cards.insertOrUpdate(model);
       }
 
       public async getDeck(model: DeckModel) {
