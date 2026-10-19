@@ -6,7 +6,7 @@ import { DeckModel } from "../../../service/store.js";
 
 const { select, option } = Component;
 
-export function DeckSelector({ deckSelected }: { deckSelected?: (model: DeckModel) => void}) {
+export function DeckSelector({ deckSelected, placeholder }: { deckSelected?: (model: DeckModel) => void, placeholder: string }) {
       const decks: Reactive<Map<string, DeckModel>> = new Reactive(new Map);
 
       Provider.of(DeckService).getAllDecks().then(stored => {
@@ -27,7 +27,7 @@ export function DeckSelector({ deckSelected }: { deckSelected?: (model: DeckMode
       return react([decks], () => 
             select({ change },
                   option({ value: '' },
-                        'select a deck'
+                        placeholder
                   ),
                   ...decks.value.keys().map(deck => 
                         option({ value: deck }, 

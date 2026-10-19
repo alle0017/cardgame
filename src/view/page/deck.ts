@@ -39,7 +39,7 @@ export function DeckPage() {
       return div({ style: `${column('20px')}` },
             div({ style: `${row('10px')}` },
                   input({ ...name.binding, placeholder: 'insert here the deck name' }),
-                  DeckSelector({ deckSelected: loadDeck }),
+                  DeckSelector({ placeholder: 'select the deck', deckSelected: loadDeck }),
                   button({ click: save },
                         'save'
                   )

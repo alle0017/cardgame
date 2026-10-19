@@ -10,10 +10,17 @@ export class Deck extends Stack implements Topic {
       public useCards(cards: Card[]) {
             this.cards.value = cards;
       }
+      
+      @dispatch
+      public bottom(card: Card) {
+            this.cards.value.unshift(card);
+            this.cards.dispatch();
+      }
 
       public draw() {
             return this.pop();
       }
+
 
       public shuffle() {
             const cards = this.cards.value.toSorted(() => Math.random() - Math.random());

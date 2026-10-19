@@ -13,11 +13,12 @@ type Args = {
       model: model.Player, 
       graveyard: Options, 
       deck: Options 
+      mana: Options 
       hand: Options, 
       zones: Options
       zoneClicked?: (model: stack.Stack) => void, 
 }
-export function Player({ model, graveyard, hand, deck, zones, zoneClicked }: Args) {
+export function Player({ model, graveyard, hand, deck, mana, zones, zoneClicked }: Args) {
       return div({ style: `${row()}` },
             div({ style: column('20px') },
                   div({ style: `align-items: center; justify-content: center; ${row()}` },
@@ -29,7 +30,10 @@ export function Player({ model, graveyard, hand, deck, zones, zoneClicked }: Arg
             ),
             div({ style: column('20px') },
                   Stack({ model: model.graveyard, options: graveyard }),
-                  Deck({ model: model.deck, options: deck }),
+                  div({ style: row() },
+                        Deck({ model: model.deck, options: deck }),
+                        Deck({ model: model.mana, options: mana }),
+                  )
             ),
       )
 }

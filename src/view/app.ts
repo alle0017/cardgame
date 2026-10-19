@@ -43,12 +43,12 @@ export function App() {
             }
             button, input, select {
                   padding: 10px;
-                  text-transform: uppercase;
                   border: none;
                   background-color: ${Provider.of(Theme).accentPrimary};
                   border-radius: 7px;
             }     
             button {
+                  text-transform: uppercase;
                   width: 150px;
             }
             input, select {

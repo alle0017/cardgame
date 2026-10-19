@@ -18,6 +18,7 @@ const GraveyardOptions: Options = {
                   return;
             }
             const card = await CardPicker(game.local.graveyard.cards.value);
+            game.local.graveyard.remove(card);
             game.local.hand.add(card);
       },
       exit: undefined
@@ -30,6 +31,7 @@ const DeckOptions: Options = {
       async 'add to hand'() {
             const game = Provider.of(Game);
             const card = await CardPicker(game.local.deck.cards.value);
+            game.local.deck.remove(card);
             game.local.hand.add(card);
       },
       draw() {
@@ -47,6 +49,26 @@ const DeckOptions: Options = {
             }
             const card = game.local.deck.draw()!;
             game.local.graveyard.add(card);
+      },
+      shuffle() {
+            const game = Provider.of(Game);
+            game.local.deck.shuffle();
+      },
+      exit: undefined
+}
+const ManaOptions: Options = {
+      async view() {
+            const game = Provider.of(Game);
+            await CardPicker(game.local.mana.cards.value);
+      },
+      async play() {
+            const game = Provider.of(Game);
+            if (game.local.mana.cards.value.length <= 0) {
+                  return;
+            }
+            const zone = await Provider.of(ZoneSelector).wait();
+            const card = game.local.mana.draw()!;
+            zone.add(card);
       },
       shuffle() {
             const game = Provider.of(Game);
@@ -76,6 +98,16 @@ const FieldOptions: Options = {
             const zone = arg['model'] as Stack;
             await CardPicker(zone.cards.value);
       },
+      async 'add to mana deck'(arg: Record<string, unknown>) {
+            const zone = arg['model'] as Stack;
+            const game = Provider.of(Game);
+            if (zone.cards.value.length <= 0) {
+                  return;
+            }
+            const card = await CardPicker(zone.cards.value);
+            zone.remove(card);
+            game.local.mana.bottom(card);
+      },
       async 'add to hand'(arg: Record<string, unknown>) {
             const zone = arg['model'] as Stack;
             const game = Provider.of(Game);
@@ -83,6 +115,7 @@ const FieldOptions: Options = {
                   return;
             }
             const card = await CardPicker(zone.cards.value);
+            zone.remove(card);
             game.local.hand.add(card);
       },
       async 'send to graveyard'(arg: Record<string, unknown>) {
@@ -92,11 +125,20 @@ const FieldOptions: Options = {
                   return;
             }
             const card = await CardPicker(zone.cards.value);
+            zone.remove(card);
             game.local.graveyard.add(card);
       },
       exit: undefined
 }
 
 export function LocalPlayer({ model }: { model: model.LocalPlayer }) {
-      return Player({ model, graveyard: GraveyardOptions, hand: HandOptions, deck: DeckOptions, zones: FieldOptions, zoneClicked: zone => Provider.of(ZoneSelector).select(zone) })
+      return Player({ 
+            model, 
+            graveyard: GraveyardOptions, 
+            hand: HandOptions, 
+            deck: DeckOptions, 
+            zones: FieldOptions, 
+            zoneClicked: zone => Provider.of(ZoneSelector).select(zone),
+            mana: ManaOptions
+      })
 }

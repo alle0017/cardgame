@@ -59,17 +59,20 @@ export function HomePage() {
       const opponent = bind();
       const game = bind();
       let deck: DeckModel | undefined;
+      let mana: DeckModel | undefined;
 
       async function play() {
-            if (!nickname.value.replaceAll(' ', '') || !opponent.value.replaceAll(' ', '') || !game.value.replaceAll(' ', '') || !deck) {
+            if (!nickname.value.replaceAll(' ', '') || !opponent.value.replaceAll(' ', '') || !game.value.replaceAll(' ', '') || !deck || !mana) {
                   return;
             }
             const cards = await Provider.of(DeckService).getDeck(deck);
+            const manaCards = await Provider.of(DeckService).getDeck(mana);
             Provider.of(Router).goto('/game', {
                   local: nickname.value.replaceAll(' ', ''),
                   remote: opponent.value.replaceAll(' ', ''),
                   game: game.value.replaceAll(' ', ''),
-                  deck: cards
+                  deck: cards,
+                  mana: manaCards
             } satisfies GamePageParams);
       }
       return div({ style: `background-color: ${theme.primary}; align-items: center; justify-content: center; border-radius: 7px; width: 500px; padding: 30px; ${column('20px')}` },
@@ -77,7 +80,8 @@ export function HomePage() {
             input({ ...opponent.binding, placeholder: 'insert here the opponent nickname'  }), 
             input({ ...game.binding, placeholder: 'insert here the game password' }), 
 
-            DeckSelector({ deckSelected: model => (deck = model) }),
+            DeckSelector({ placeholder: 'select the main deck', deckSelected: model => (deck = model) }),
+            DeckSelector({ placeholder: 'select the mana deck', deckSelected: model => (mana = model) }),
             
             hr({ style: "width: 80%;" }),
             CloudKeyInput(),
