@@ -10,6 +10,11 @@ export class Stack implements Topic {
       constructor(player: string) {
             this.topic = `stack/${player}/`
       }
+      @dispatch
+      public clear() {
+            this.cards.value = [];
+            this.cards.dispatch();
+      }
 
       @dispatch
       public add(card: Card) {

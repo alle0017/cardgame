@@ -2,8 +2,8 @@ import { Stack } from "../../../model/components/stack.js";
 import { ContextMenu } from "../context_menu/context_menu.js";
 
 type PromiseHandler<T> = {
-      promise: Promise<T>,
-      resolve: (v: T) => void
+      promise: () => Promise<T>,
+      resolve: () => (v: T) => void
 }
 
 export class ZoneSelector {
@@ -12,19 +12,19 @@ export class ZoneSelector {
             if (!this.promise) {
                   return;
             }
-            this.promise.resolve(stack);
+            this.promise.resolve()(stack);
             this.promise = undefined;
             ContextMenu.unlock();
       }
 
       public wait(): Promise<Stack> {
             if (this.promise) {
-                  return this.promise.promise;
+                  return this.promise.promise();
             }
             const promise = new Promise<Stack>(resolve => {
                   this.promise = {
-                        promise,
-                        resolve
+                        promise: () => promise,
+                        resolve: () => resolve
                   }
             });
             ContextMenu.lock();

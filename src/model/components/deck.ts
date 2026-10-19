@@ -6,9 +6,11 @@ export class Deck extends Stack implements Topic {
             super(`deck/${player}`);
       }
 
-      @dispatch
       public useCards(cards: Card[]) {
-            this.cards.value = cards;
+            this.clear();
+            for (const card of cards) {
+                  this.add(card);
+            }
       }
       
       @dispatch

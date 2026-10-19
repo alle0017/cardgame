@@ -80,6 +80,21 @@ export function HomePage() {
                   mana: manaCards
             } satisfies GamePageParams);
       }
+      async function playSolo() {
+            if (!deck || !mana) {
+                  return;
+            }
+            const cards = await Provider.of(DeckService).getDeck(deck);
+            const manaCards = await Provider.of(DeckService).getDeck(mana);
+            Provider.of(Router).goto('/game', {
+                  local: '',
+                  remote: '',
+                  game: 'any',
+                  deck: cards,
+                  mana: manaCards,
+                  solo: true
+            } satisfies GamePageParams);
+      }
       return div({ style: `background-color: ${theme.primary}; align-items: center; justify-content: center; border-radius: 7px; width: 500px; padding: 30px; ${column('20px')}` },
             input({ ...nickname.binding, placeholder: 'insert here your nickname' }), 
             input({ ...opponent.binding, placeholder: 'insert here the opponent nickname'  }), 
@@ -92,6 +107,9 @@ export function HomePage() {
             CloudKeyInput(),
             button({ click: play }, 
                   'Play'
+            ),
+            button({ click: playSolo }, 
+                  'Play solo'
             ),
             button({ click: () => Provider.of(Router).goto('/deck') }, 
                   'Build deck'

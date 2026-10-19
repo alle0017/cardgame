@@ -1,8 +1,8 @@
 import { LocalQueue } from "./local/queue.js";
-
+type Args = Record<`arg${number}`, unknown>
 export type RemoteCall = {
       method: string,
-      args: string
+      args: Args
 }
 export class Controller {
       private static readonly controlled: WeakSet<{}> = new WeakSet;
@@ -29,7 +29,15 @@ export function remote(obj: Topic) {
             if (!fn || typeof fn != 'function') {
                   throw new Error('invalid method call')
             }
-            fn.call(obj, ...JSON.parse(call.args ?? '[]'));
+
+            const argObj = call.args;
+            const args: unknown[] = [];
+
+            for (const [arg, value] of Object.entries(argObj)) {
+                  const idx = Number.parseInt(arg.replace('arg', ''));
+                  args[idx] = value;
+            }
+            fn.call(obj, ...args);
       });
 }
 export function controller<T extends Topic>(obj: T) {
@@ -54,7 +62,12 @@ export function dispatch(method: (...args: any[]) => void, ctx: ClassMethodDecor
             this.__dispatchers__ ??= new Map;
             this.__dispatchers__.set(ctx.name.toString(), function (this: Topic, ...args: any[]) {
                   method.call(this, ...args);
-                  Controller.getQueue().push(this.topic, { args: JSON.stringify(args), method: ctx.name.toString() });
+                  const argObj: Args = {};
+
+                  for (let i = 0; i < args.length; i++) {
+                        argObj[`arg${i}`] = args[i];
+                  }
+                  Controller.getQueue().push(this.topic, { args: argObj, method: ctx.name.toString() });
             })
       })     
 }
