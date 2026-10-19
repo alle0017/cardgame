@@ -139,6 +139,7 @@ export function LocalPlayer({ model }: { model: model.LocalPlayer }) {
             deck: DeckOptions, 
             zones: FieldOptions, 
             zoneClicked: zone => Provider.of(ZoneSelector).select(zone),
-            mana: ManaOptions
+            mana: ManaOptions,
+            reverse: false
       })
 }

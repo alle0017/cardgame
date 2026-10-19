@@ -16,11 +16,12 @@ type Args = {
       mana: Options 
       hand: Options, 
       zones: Options
+      reverse: boolean
       zoneClicked?: (model: stack.Stack) => void, 
 }
-export function Player({ model, graveyard, hand, deck, mana, zones, zoneClicked }: Args) {
+export function Player({ model, graveyard, hand, deck, mana, zones, zoneClicked, reverse }: Args) {
       return div({ style: `${row()}` },
-            div({ style: column('20px') },
+            div({ style: column('20px', reverse) },
                   div({ style: `align-items: center; justify-content: center; ${row()}` },
                         ...model.zones.map(zone => 
                               Stack({ model: zone, click: () => zoneClicked?.(zone), options: zones })
@@ -28,7 +29,7 @@ export function Player({ model, graveyard, hand, deck, mana, zones, zoneClicked 
                   ),
                   Hand({ model: model.hand, options: hand }),
             ),
-            div({ style: column('20px') },
+            div({ style: column('20px', reverse) },
                   Stack({ model: model.graveyard, options: graveyard }),
                   div({ style: row() },
                         Deck({ model: model.deck, options: deck }),

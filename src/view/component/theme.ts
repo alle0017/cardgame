@@ -32,4 +32,4 @@ export class Theme {
 }
 
 export const row = (gap = '10px') => `display: flex; flex-direction: row; gap: ${gap};`
-export const column = (gap = '10px') => `display: flex; flex-direction: column; gap: ${gap};`
+export const column = (gap = '10px', reverse: boolean = false) => `display: flex; flex-direction: ${reverse ? 'column-reverse' : 'column'}; gap: ${gap};`
