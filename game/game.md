@@ -43,7 +43,7 @@ Cards can be of two main types:
 <br />
 
 * spell: cards used to attack the opponent. They have an attack value and a color. They can be played only if a permanent with the same color is onto the player field. they can have two trigger for their effect
-  * [act]: activate effect, effects are resolved immediately when the card is activated 
+  * \[act]: activate effect, effects are resolved immediately when the card is activated
   * \[res]: resolution effects, effects are resolved when the card goes to the graveyard
 * Permanent: Cards that are placed onto a zone the player controls. This cards have a defense point and an effect. Effects can only be continuous, thus, applied continuously until the card stays into a zone. Each player can only play one of those cards per turn.
 
@@ -88,7 +88,7 @@ The opponent player can respond either with spells (equal to the attacking spell
 
 <br />
 
-Permanents destroyed in any way come back into the deck, while spells are sent to the graveyard. 
+Permanents destroyed in any way come back into the deck, while spells are sent to the graveyard.
 
 <br />
 
