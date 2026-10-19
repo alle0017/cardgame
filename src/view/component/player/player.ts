@@ -27,7 +27,7 @@ export function Player({ model, graveyard, hand, deck, mana, zones, zoneClicked,
                               Stack({ model: zone, click: () => zoneClicked?.(zone), options: zones })
                         )
                   ),
-                  Hand({ model: model.hand, options: hand }),
+                  Hand({ model: model.hand, options: hand, hide: reverse }),
             ),
             div({ style: column('20px', reverse) },
                   Stack({ model: model.graveyard, options: graveyard }),

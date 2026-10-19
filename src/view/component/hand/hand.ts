@@ -8,12 +8,12 @@ import { ContextMenuTrigger } from "../context_menu/context_menu_trigger.js";
 
 const { div } = Component;
 
-export function Hand({ model, options }: { model: model.Hand, options: Options }) {
+export function Hand({ model, options, hide }: { model: model.Hand, hide: boolean, options: Options }) {
       return react([model.cards], () =>
             div({ style: `align-items: center; justify-content: center; overflow-x: scroll; width: ${Provider.of(CardState).width * 5}px; ${row()}` },
                   ...model.cards.value.map(card => 
                         ContextMenuTrigger({ options, ctx: { card } }, 
-                              Card({ src: card.img }),
+                              hide ? Card({}) : Card({ src: card.img }),
                         )
                   )
             ),
