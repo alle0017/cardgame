@@ -8,6 +8,7 @@ import { Router } from "./lib/router.js";
 import { DeckPage } from "./page/deck.js";
 import { GamePage, GamePageParams } from "./page/game.js";
 import { HomePage } from "./page/home.js";
+import { ThemePage } from "./page/theme.js";
 
 export function App() {
       Provider.set(CardState, new CardState);
@@ -17,7 +18,8 @@ export function App() {
       Provider.set(Router, new Router({ 
             '/': HomePage,
             '/game': props => GamePage(props as GamePageParams),
-            '/deck': DeckPage 
+            '/deck': DeckPage,
+            '/theme': ThemePage,
       }, '/'))
 
       style(/*css*/`
