@@ -34,7 +34,7 @@ export function DeckPage() {
             if (!name.value.replaceAll(' ', '')) {
                   return;
             }
-            await Provider.of(DeckService).createDeck(name.value, cards.value);
+            await Provider.of(DeckService).createDeck(name.value, deck.value);
       }
       return div({ style: `${column('20px')}` },
             div({ style: `${row('10px')}` },

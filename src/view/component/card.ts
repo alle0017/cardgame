@@ -10,7 +10,7 @@ export class CardState {
       get height() {
             return 86 * this.scale;
       }
-      scale = 2;
+      scale = 3;
 }
 
 export function Card({ src, click }: { src?: string, click?: () => void }) {
