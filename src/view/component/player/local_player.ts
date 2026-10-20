@@ -72,7 +72,7 @@ const ManaOptions: Options = {
       },
       shuffle() {
             const game = Provider.of(Game);
-            game.local.deck.shuffle();
+            game.local.mana.shuffle();
       },
       exit: undefined
 }
