@@ -104,7 +104,6 @@ export function HomePage() {
             DeckSelector({ placeholder: 'select the mana deck', deckSelected: model => (mana = model) }),
             
             hr({ style: "width: 80%;" }),
-            CloudKeyInput(),
             button({ click: play }, 
                   'Play'
             ),
@@ -117,8 +116,8 @@ export function HomePage() {
             button({ click: importNewCards }, 
                   'Import cards'
             ),            
-            button({ click: () => Provider.of(Router).goto('/theme') }, 
-                  'Change theme'
+            button({ click: () => Provider.of(Router).goto('/settings') }, 
+                  'Settings'
             ),
       )
 }
