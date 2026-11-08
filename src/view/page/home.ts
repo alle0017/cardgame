@@ -105,12 +105,12 @@ export function HomePage() {
                   console.error(e)
             }
       }
-      return div({ style: `background-color: ${theme.primary}; align-items: center; justify-content: center; border-radius: 7px; width: 500px; padding: 30px; ${column('20px')}` },
+      return div({ style: `border: 1px solid ${theme.primary}; align-items: center; justify-content: center; border-radius: 7px; width: 500px; padding: 30px; ${column('20px')}` },
             input({ ...nickname.binding, placeholder: 'insert here your nickname' }), 
             input({ ...opponent.binding, placeholder: 'insert here the opponent nickname'  }), 
             input({ ...game.binding, placeholder: 'insert here the game password' }), 
             ...board.decks.map(k => 
-                  DeckSelector({ placeholder: 'select the main deck', deckSelected: model => decks.set(k, model) }),
+                  DeckSelector({ placeholder: `select the ${k} deck`, deckSelected: model => decks.set(k, model) }),
             ),
             
             hr({ style: "width: 80%;" }),
@@ -125,7 +125,10 @@ export function HomePage() {
             ),
             button({ click: importNewCards }, 
                   'Import cards'
-            ),            
+            ),     
+            button({ click: () => Provider.of(Router).goto('/board_builder') }, 
+                  'Build board'
+            ),       
             button({ click: () => Provider.of(Router).goto('/settings') }, 
                   'Settings'
             ),

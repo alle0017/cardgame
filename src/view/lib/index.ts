@@ -67,9 +67,20 @@ export function react(signals: Reactive<unknown>[], component: () => HTMLElement
       return el;
 }
 
-export function style(css: string) {
-      document.head.append(Component.style({}, css))
-}
+export const style = (() => {
+      const map: Map<string, HTMLElement> = new Map;
+      return (css: string) => {
+            css = css.replace(/\s+/g, ' ').trim();
+
+            if (map.has(css)) {
+                  return;
+            }
+
+            const sheet = Component.style({}, css);
+            map.set(css, sheet);
+            document.head.append(sheet);
+      }
+})()
 export function bind() {
       const obj =  {
             value: '',

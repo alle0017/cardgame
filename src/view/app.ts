@@ -5,6 +5,7 @@ import { Theme } from "./component/theme.js";
 import { style } from "./lib/index.js";
 import { Provider } from "./lib/provider.js";
 import { Router } from "./lib/router.js";
+import { BoardBuilderPage } from "./page/board_builder_page.js";
 import { DeckPage } from "./page/deck.js";
 import { GamePage, GamePageParams } from "./page/game.js";
 import { HomePage } from "./page/home.js";
@@ -26,6 +27,7 @@ export function App() {
             '/game': props => GamePage(props as GamePageParams),
             '/deck': DeckPage,
             '/settings': SettingsPage,
+            '/board_builder': BoardBuilderPage
       }, '/'))
 
       style(/*css*/`
@@ -33,15 +35,6 @@ export function App() {
                   background-color: ${Provider.of(Theme).background};
                   color: ${Provider.of(Theme).text};
                   font-family: system-ui;
-            }
-            details > *, 
-            details > * > *, 
-            details > * > * > *, 
-            details > * > * > * > *, 
-            details > * > * > * > * > *, 
-            details > * > * > * > * > * > *,
-            details > * > * > * > * > * > * > * {
-                  background-color: ${Provider.of(Theme).primary};
             }
             body {
                   display: flex;
@@ -68,8 +61,6 @@ export function App() {
             input:focus, select:focus {
                   outline: none;
             }
-            
-
       `)
       Provider.of(Router).mount();
 }
