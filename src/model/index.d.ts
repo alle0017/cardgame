@@ -10,3 +10,10 @@ interface Queue<T> {
 interface Topic {
       readonly topic: string
 }
+
+type Board = {
+      shared: string[],
+      fields: string[][],
+      decks: string[],
+      zones: string[]
+}

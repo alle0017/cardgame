@@ -4,7 +4,7 @@ import { column, Theme } from "../theme.js";
 
 const { div } = Component;
 
-export type Options<T extends {} = {}> = Record<string, ((args: T) => void) | undefined>;
+export type Options<T extends {} = {}> = Record<string, ((args: T) => void) | ((args: T) => Promise<void>) | undefined>;
 
 export class ContextMenu {
       private static locked = false;

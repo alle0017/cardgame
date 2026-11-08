@@ -12,15 +12,16 @@ export class Shared<T extends Topic> {
 export class Game {
       public readonly local: Player;
       public readonly remote: Player;
-      private readonly _stack: Shared<Stack>;
+      public readonly shared: Map<string, Shared<Stack>> = new Map;
+      
 
-      get stack() {
-            return this._stack.controller;
-      }
+      constructor(localPlayer: string, remotePlayer: string, public readonly game: string, public readonly board: Board) {
+            this.local = new LocalPlayer(`${game}/${localPlayer}`, this.board);
+            this.remote = new RemotePlayer(`${game}/${remotePlayer}`, this.board);
 
-      constructor(localPlayer: string, remotePlayer: string, public readonly game: string) {
-            this.local = new LocalPlayer(`${game}/${localPlayer}`);
-            this.remote = new RemotePlayer(`${game}/${remotePlayer}`);
-            this._stack = new Shared(new Stack(game));
+            for (const shared of this.board.shared) {
+
+                  this.shared.set(shared, new Shared(new Stack(game)));
+            }
       }
 }

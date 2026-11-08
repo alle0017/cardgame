@@ -1,5 +1,5 @@
 import * as model from "../../../model/game.js";
-import { Component } from "../../lib/index.js";
+import { Component, } from "../../lib/index.js";
 import { Provider } from "../../lib/provider.js";
 import { CardPicker } from "../card_picker/card_picker.js";
 import { Options } from "../context_menu/context_menu.js";
@@ -10,25 +10,37 @@ import { column } from "../theme.js";
 
 const { div } = Component;
 
-const StackOptions: Options = {
-      async view() {
-            const game = Provider.of(model.Game);
-            await CardPicker(game.stack.cards.value);
-      },
-      'send to graveyard'() {
-            const game = Provider.of(model.Game);
-            if (game.stack.cards.value.length <= 0) {
-                  return;
+function StackOptions(id: string): Options {
+      const opts: Options = {};
+
+      for (const zone of Provider.of(model.Game).board.zones) {
+            opts[`put into ${zone}`] = () => {
+                  const game = Provider.of(model.Game);
+                  if (game.shared.get(id)!.controller.cards.value.length <= 0) {
+                        return;
+                  }
+                  const card = game.shared.get(id)!.controller.pop();
+                  game.local.zones.get(zone)!.add(card!);
             }
-            const card = game.stack.pop();
-            game.local.graveyard.add(card!);
-      },
-      exit: undefined
-}
+      }
+      return {
+            async view() {
+                  const game = Provider.of(model.Game);
+                  await CardPicker(game.shared.get(id)!.controller.cards.value);
+            },
+            ...opts,
+            exit: undefined
+      }
+} 
 export function Game({ model }: { model: model.Game }) {
       return div({ style: `align-items: center; ${column('10px')}` },
             RemotePlayer({ model: model.remote }),
-            Stack({ model: model.stack, options: StackOptions }),
+            div({ style: column() },
+                  ...model.shared.entries().map(([id, model]) => 
+                        Stack({ model: model.controller, options: StackOptions(id) }),
+                  )
+            
+            ),
             LocalPlayer({ model: model.local })
       )
 }

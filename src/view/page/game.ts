@@ -9,9 +9,9 @@ export interface GamePageParams {
       local: string,
       remote: string,
       game: string,
-      deck: Card[],
-      mana: Card[],
-      solo?: boolean
+      decks: Map<string, Card[]>
+      solo?: boolean,
+      board: Board
 }
 export function GamePage(params: GamePageParams) {
       if (!params.solo) {
@@ -19,9 +19,10 @@ export function GamePage(params: GamePageParams) {
       } else {
             Controller.setQueue(new LocalQueue)
       }
-      const game = new model.Game(params.local, params.remote, params.game);
+      const game = new model.Game(params.local, params.remote, params.game, params.board);
       Provider.set(model.Game, game);
-      game.local.deck.useCards(params.deck);
-      game.local.mana.useCards(params.mana);
+      for (const [key, deck] of params.decks) {
+            game.local.decks.get(key)!.useCards(deck);
+      }
       return Game({ model: game });
 }

@@ -11,5 +11,9 @@ export function ContextMenuTrigger({ options, ctx }: Args,  child: HTMLElement, 
             e.preventDefault();
             ContextMenu.append(child, options, ctx);
       })
+      child.addEventListener('click', e => {
+            e.preventDefault();
+            ContextMenu.append(child, options, ctx);
+      })
       return child;
 }

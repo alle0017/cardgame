@@ -1,3 +1,4 @@
+import { Game } from "../../model/game.js";
 import { DeckService } from "../../service/deck.js";
 import { DeckModel } from "../../service/store.js";
 import { DeckSelector } from "../component/deck_selector/deck_selector.js";
@@ -57,50 +58,60 @@ async function importNewCards() {
             service.createCard({ id: 0, ...card });
       }
 }
-export function HomePage() {
+export function HomePage(board: Board) {
+      console.log(board)
       const theme = Provider.of(Theme);
       const nickname = bind();
       const opponent = bind();
       const game = bind();
-      let deck: DeckModel | undefined;
-      let mana: DeckModel | undefined;
-
-      async function play() {
-            if (!nickname.value.replaceAll(' ', '') || !opponent.value.replaceAll(' ', '') || !game.value.replaceAll(' ', '') || !deck || !mana) {
-                  return;
+      const decks: Map<string, DeckModel> = new Map;
+      async function loadDecks() {
+            if (decks.size != board.decks.length) {
+                  throw new Error("can't continue as some decks are missing");
             }
-            const cards = await Provider.of(DeckService).getDeck(deck);
-            const manaCards = await Provider.of(DeckService).getDeck(mana);
-            Provider.of(Router).goto('/game', {
-                  local: nickname.value.replaceAll(' ', ''),
-                  remote: opponent.value.replaceAll(' ', ''),
-                  game: game.value.replaceAll(' ', ''),
-                  deck: cards,
-                  mana: manaCards
-            } satisfies GamePageParams);
+            const promises = decks.entries().map(async ([k,v]) => [k, await Provider.of(DeckService).getDeck(v)] as const)
+            const entries = await Promise.all(promises);
+            return new Map(entries);
+      }
+      async function play() {
+            try {
+                  if (!nickname.value.replaceAll(' ', '') || !opponent.value.replaceAll(' ', '') || !game.value.replaceAll(' ', '')) {
+                        return;
+                  }
+
+                  Provider.of(Router).goto('/game', {
+                        local: nickname.value.replaceAll(' ', ''),
+                        remote: opponent.value.replaceAll(' ', ''),
+                        game: game.value.replaceAll(' ', ''),
+                        decks: await loadDecks(),
+                        board
+                  } satisfies GamePageParams);
+            } catch (e) {
+                  console.error(e)
+            }
+            
       }
       async function playSolo() {
-            if (!deck || !mana) {
-                  return;
+             try {
+                  Provider.of(Router).goto('/game', {
+                        local: '',
+                        remote: '',
+                        game: 'local game only',
+                        decks: await loadDecks(), 
+                        solo: true,
+                        board
+                  } satisfies GamePageParams);
+            } catch (e) {
+                  console.error(e)
             }
-            const cards = await Provider.of(DeckService).getDeck(deck);
-            const manaCards = await Provider.of(DeckService).getDeck(mana);
-            Provider.of(Router).goto('/game', {
-                  local: '',
-                  remote: '',
-                  game: 'any',
-                  deck: cards,
-                  mana: manaCards,
-                  solo: true
-            } satisfies GamePageParams);
       }
       return div({ style: `background-color: ${theme.primary}; align-items: center; justify-content: center; border-radius: 7px; width: 500px; padding: 30px; ${column('20px')}` },
             input({ ...nickname.binding, placeholder: 'insert here your nickname' }), 
             input({ ...opponent.binding, placeholder: 'insert here the opponent nickname'  }), 
             input({ ...game.binding, placeholder: 'insert here the game password' }), 
-
-            DeckSelector({ placeholder: 'select the main deck', deckSelected: model => (deck = model) }),
-            DeckSelector({ placeholder: 'select the mana deck', deckSelected: model => (mana = model) }),
+            ...board.decks.map(k => 
+                  DeckSelector({ placeholder: 'select the main deck', deckSelected: model => decks.set(k, model) }),
+            ),
             
             hr({ style: "width: 80%;" }),
             button({ click: play }, 

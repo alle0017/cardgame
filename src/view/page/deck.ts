@@ -7,6 +7,8 @@ import { Provider } from "../lib/provider.js";
 import { Reactive } from '../../model/lib/reactive.js';
 import { DeckModel } from "../../service/store.js";
 import { DeckSelector } from "../component/deck_selector/deck_selector.js";
+import { CardState } from "../component/card.js";
+import { Router } from "../lib/router.js";
 
 const { div, input, button, } = Component;
 
@@ -14,6 +16,7 @@ export function DeckPage() {
       const cards: Reactive<Card[]> = new Reactive([]);
       const deck: Reactive<Card[]> = new Reactive([]);
       const name = bind();
+      const Input = input({ ...name.binding, placeholder: 'insert here the deck name' }) as HTMLInputElement;
 
       Provider.of(DeckService).getAllCards().then(stored => cards.value = stored).catch(console.error);
       
@@ -29,6 +32,7 @@ export function DeckPage() {
       async function loadDeck(model: DeckModel) { 
             const cards = await Provider.of(DeckService).getDeck(model);
             deck.value = cards;
+            Input.value = model.name;
       }
       async function save() {
             if (!name.value.replaceAll(' ', '')) {
@@ -36,17 +40,29 @@ export function DeckPage() {
             }
             await Provider.of(DeckService).createDeck(name.value, deck.value);
       }
+      function sort() {
+            deck.value.sort((a,b) => a.img.localeCompare(b.img))
+            deck.dispatch();
+      }
       return div({ style: `${column('20px')}` },
             div({ style: `${row('10px')}` },
-                  input({ ...name.binding, placeholder: 'insert here the deck name' }),
+                  button({ click: () => Provider.of(Router).goto('/') },
+                        'back'
+                  ),
+                  Input,
                   DeckSelector({ placeholder: 'select the deck', deckSelected: loadDeck }),
                   button({ click: save },
                         'save'
+                  ),
+                  button({ click: sort },
+                        'sort'
                   )
             ),
             div({ style: `${row('10px')}` },
-                  react([deck], () => 
-                        Table({ cards: deck.value, click: remove }),
+                  div({ style: `width: ${Provider.of(CardState).width * 8}px; height: 70vh; overflow-y: scroll;`},
+                        react([deck], () => 
+                              Table({ cards: deck.value, click: remove }),
+                        ),
                   ),
                   react([cards], () => 
                         CardSearch({ cards: cards.value, click: add }),
