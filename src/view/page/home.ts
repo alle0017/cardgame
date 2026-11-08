@@ -1,4 +1,4 @@
-import { Game } from "../../model/game.js";
+import { Game, getBoard } from "../../model/game.js";
 import { DeckService } from "../../service/deck.js";
 import { DeckModel } from "../../service/store.js";
 import { DeckSelector } from "../component/deck_selector/deck_selector.js";
@@ -58,8 +58,8 @@ async function importNewCards() {
             service.createCard({ id: 0, ...card });
       }
 }
-export function HomePage(board: Board) {
-      console.log(board)
+export function HomePage() {
+      const board = getBoard();
       const theme = Provider.of(Theme);
       const nickname = bind();
       const opponent = bind();

@@ -22,7 +22,7 @@ export function App() {
       Provider.set(DeckService, new DeckService);
       Provider.set(ZoneSelector, new ZoneSelector);
       Provider.set(Router, new Router({ 
-            '/': (props) => HomePage(props && Object.keys(props).length > 0 ? props as Board: board),
+            '/': HomePage,
             '/game': props => GamePage(props as GamePageParams),
             '/deck': DeckPage,
             '/settings': SettingsPage,

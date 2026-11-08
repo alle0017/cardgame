@@ -9,6 +9,21 @@ export class Shared<T extends Topic> {
             remote(target);
       }
 }
+export function setBoard(board: Board) {
+      localStorage.setItem('game-board', JSON.stringify(board));
+}
+export function getBoard(): Board {
+      const json = localStorage.getItem('game-board');
+      if (json) {
+            return JSON.parse(json);
+      }
+      return {
+            decks: [],
+            fields: [],
+            zones: [],
+            shared: []
+      }
+}
 export class Game {
       public readonly local: Player;
       public readonly remote: Player;
