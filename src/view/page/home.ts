@@ -1,4 +1,5 @@
-import { Game, getBoard } from "../../model/game.js";
+import { getBoard } from "../../model/game.js";
+import { FirebaseComponent } from "../../model/lib/firebase/firebase.js";
 import { DeckService } from "../../service/deck.js";
 import { DeckModel } from "../../service/store.js";
 import { DeckSelector } from "../component/deck_selector/deck_selector.js";
@@ -55,7 +56,7 @@ async function importNewCards() {
       const service = Provider.of(DeckService);
       const cards = await importImages();
       for (const card of cards) {
-            service.createCard({ id: 0, ...card });
+            service.createCard({ id: 0, ...card }).catch(console.error);
       }
 }
 export function HomePage() {
@@ -106,17 +107,24 @@ export function HomePage() {
             }
       }
       return div({ style: `border: 1px solid ${theme.primary}; align-items: center; justify-content: center; border-radius: 7px; width: 500px; padding: 30px; ${column('20px')}` },
-            input({ ...nickname.binding, placeholder: 'insert here your nickname' }), 
-            input({ ...opponent.binding, placeholder: 'insert here the opponent nickname'  }), 
+            ...(FirebaseComponent.hasKey() ? [
+                  input({ ...nickname.binding, placeholder: 'insert here your nickname' }), 
+                  input({ ...opponent.binding, placeholder: 'insert here the opponent nickname'  }), 
+            ]: [
+                  button({ click: () => Provider.of(Router).goto('/settings') },
+                        'Cloud settings are missing, set it here'
+                  )
+            ]),
             input({ ...game.binding, placeholder: 'insert here the game password' }), 
             ...board.decks.map(k => 
                   DeckSelector({ placeholder: `select the ${k} deck`, deckSelected: model => decks.set(k, model) }),
             ),
             
             hr({ style: "width: 80%;" }),
-            button({ click: play }, 
-                  'Play'
-            ),
+            FirebaseComponent.hasKey() ? 
+                  button({ click: play }, 
+                        'Play'
+                  ): '',
             button({ click: playSolo }, 
                   'Play solo'
             ),

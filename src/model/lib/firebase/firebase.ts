@@ -7,6 +7,9 @@ export class FirebaseComponent {
       public static setKey(key: string) {
             localStorage.setItem('firebase-key', key);
       }
+      public static hasKey() {
+            return Boolean(localStorage.getItem('firebase-key'))
+      }
       private static get Database() {
             if (!this.database) {
                   const key = JSON.parse(localStorage.getItem('firebase-key') ?? '{}')
