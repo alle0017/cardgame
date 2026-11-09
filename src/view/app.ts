@@ -59,6 +59,7 @@ export function App() {
             }
             button:hover {
                   background-color: ${Provider.of(Theme).accentSecondary};
+                  color: ${Provider.of(Theme).textPrimary}
             }     
             input:focus, select:focus {
                   outline: none;

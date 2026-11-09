@@ -4,6 +4,7 @@ export class Theme {
       accentPrimary = '#3e5869';
       accentSecondary = '#517084'
       text = '#cecece'
+      textPrimary = '#cecece'
       background = '#444'
 
       constructor() {

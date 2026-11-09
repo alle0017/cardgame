@@ -15,7 +15,7 @@ export class CardState {
 
 export function Card({ src, click }: { src?: string, click?: () => void }) {
       const size = Provider.of(CardState);
-      const style = `width: ${size.width}px; height: ${size.height}px; background-color: ${Provider.of(Theme).primary}; border-radius: 7px;`;
+      const style = `width: ${size.width}px; height: ${size.height}px; border: 1px solid ${Provider.of(Theme).primary}; border-radius: 7px;`;
       if (src) {
             return img({ style, src, click })
       }
