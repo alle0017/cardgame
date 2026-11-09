@@ -41,12 +41,14 @@ export function App() {
                   flex-direction: column;
                   align-items: center;
                   justify-content: center;
+                  min-height: 90vh;
             }
             button, input, select {
                   padding: 10px;
                   border: none;
                   background-color: ${Provider.of(Theme).accentPrimary};
                   border-radius: 7px;
+                  border: 1px solid ${Provider.of(Theme).primary};
             }     
             button {
                   text-transform: uppercase;

@@ -106,7 +106,7 @@ export function HomePage() {
                   console.error(e)
             }
       }
-      return div({ style: `border: 1px solid ${theme.primary}; align-items: center; justify-content: center; border-radius: 7px; width: 500px; padding: 30px; ${column('20px')}` },
+      return div({ style: `border: 1px solid ${theme.primary}; align-items: center; justify-content: center; border-radius: 7px; width: 500px; height: 100%; padding: 30px; ${column('20px')}` },
             ...(FirebaseComponent.hasKey() ? [
                   input({ ...nickname.binding, placeholder: 'insert here your nickname' }), 
                   input({ ...opponent.binding, placeholder: 'insert here the opponent nickname'  }), 
