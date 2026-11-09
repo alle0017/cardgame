@@ -10,9 +10,12 @@ export class FirebaseComponent {
       public static hasKey() {
             return Boolean(localStorage.getItem('firebase-key'))
       }
+      public static getKey() {
+            return JSON.parse(localStorage.getItem('firebase-key') ?? '{}')
+      }
       private static get Database() {
             if (!this.database) {
-                  const key = JSON.parse(localStorage.getItem('firebase-key') ?? '{}')
+                  const key = this.getKey();
                   const app = initializeApp(key);
                   this.database = getDatabase(app);
             }

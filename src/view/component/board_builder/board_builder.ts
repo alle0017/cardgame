@@ -6,7 +6,7 @@ import { Router } from "../../lib/router.js";
 import { column, row, Theme } from "../theme.js";
 import { List } from "./list.js";
 
-const { div, button, input } = Component
+const { div, button, } = Component
 
 export function BoardBuilder() {
       const board = getBoard();
@@ -15,8 +15,6 @@ export function BoardBuilder() {
       return div({ style: column() },
             div({ style: row() },
                   button({ click: () => Provider.of(Router).goto('/') }, 'Back'),
-                  button({ click: () => Provider.of(Router).goto('/') }, 'Export'),
-                  button({ click: () => Provider.of(Router).goto('/') }, 'Import'),
             ),
             div({ style: row() },
                   div({ style: container},
