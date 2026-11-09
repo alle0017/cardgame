@@ -95,8 +95,8 @@ export function HomePage() {
       async function playSolo() {
              try {
                   Provider.of(Router).goto('/game', {
-                        local: '',
-                        remote: '',
+                        local: 'local',
+                        remote: 'remote',
                         game: 'local game only',
                         decks: await loadDecks(), 
                         solo: true,
