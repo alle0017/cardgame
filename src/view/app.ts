@@ -12,12 +12,6 @@ import { HomePage } from "./page/home.js";
 import { SettingsPage } from "./page/settings.js";
 
 export function App() {
-      const board: Board = {
-            decks: ['main'],
-            shared: ['stack'],
-            fields: [['zone 1', 'zone 2', 'zone 3']],
-            zones: ['graveyard']
-      }
       Provider.set(CardState, new CardState);
       Provider.set(Theme, new Theme);
       Provider.set(DeckService, new DeckService);
