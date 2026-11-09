@@ -14,14 +14,18 @@ export function Item({ deleted, value }: { deleted: () => void, value: string })
             ),
       )
 }
-export function List({ save, value }: { save: (items: Set<string>) => void, value: string[] }) {
-      const items = new Reactive(new Set(value));
+export function List({ save, value }: { save: (items: string[]) => void, value: string[] }) {
+      const items = new Reactive(value);
       const name = bind();
       function click() {
-            if (!name.value.replaceAll(' ', '')) {
+            const value = name.value.replaceAll(' ', '');
+            if (!value) {
                   return;
             }
-            items.value.add(name.value.replaceAll(' ', ''));
+            if (items.value.includes(value)) {
+                  return;
+            }
+            items.value.push(name.value.replaceAll(' ', ''));
             items.dispatch();
             save(items.value)
       }
@@ -38,8 +42,7 @@ export function List({ save, value }: { save: (items: Set<string>) => void, valu
                               Item({ 
                                     value, 
                                     deleted() { 
-                                          items.value.delete(value); 
-                                          items.dispatch();
+                                          items.value = items.value.filter(v => v != value)
                                           save(items.value)
                                     } 
                               })
