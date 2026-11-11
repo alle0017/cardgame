@@ -63,6 +63,14 @@ function HandOptions(): Options {
                   game.shared.get(shared)?.controller.add(card);
             }
       }
+      for (const deck of Provider.of(Game).board.decks) {
+            opts[`add to top of ${deck} deck`] = (arg: Record<string, unknown>) => {
+                  const card = arg['card'] as Card;
+                  const game = Provider.of(Game);
+                  game.local.hand.remove(card);
+                  game.local.decks.get(deck)!.add(card);
+            }
+      }
       return {
             ...opts,
             async 'play into the field'(arg: Record<string, unknown>) {

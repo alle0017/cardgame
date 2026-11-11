@@ -28,6 +28,15 @@ function StackOptions(id: string): Options {
                   const game = Provider.of(model.Game);
                   await CardPicker(game.shared.get(id)!.controller.cards.value);
             },
+            async "add to hand"() {
+                  const game = Provider.of(model.Game);
+                  if (game.shared.get(id)!.controller.cards.value.length <= 0) {
+                        return;
+                  }
+                  const card = await CardPicker(game.shared.get(id)!.controller.cards.value);
+                  game.shared.get(id)!.controller.remove(card);
+                  game.local.hand.add(card);
+            },
             ...opts,
             exit: undefined
       }
