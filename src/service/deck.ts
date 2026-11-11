@@ -4,6 +4,10 @@ export class DeckService {
       private readonly cards: CardRepository = new CardRepository();
       private readonly decks: DeckRepository = new DeckRepository();
 
+      public deleteCard(card: CardModel) {
+            return this.cards.delete(card);
+      }
+
       public getAllCards() {
             return this.cards.getAll()
       }

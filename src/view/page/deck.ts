@@ -44,6 +44,11 @@ export function DeckPage() {
             deck.value.sort((a,b) => a.img.localeCompare(b.img))
             deck.dispatch();
       }
+
+      async function deleted(card: Card) {
+            await Provider.of(DeckService).deleteCard({ ...card, _auto: crypto.randomUUID() });
+            Provider.of(DeckService).getAllCards().then(stored => cards.value = stored).catch(console.error);
+      }
       return div({ style: `${column('20px')}` },
             div({ style: `${row('10px')}` },
                   button({ click: () => Provider.of(Router).goto('/') },
@@ -65,7 +70,7 @@ export function DeckPage() {
                         ),
                   ),
                   react([cards], () => 
-                        CardSearch({ cards: cards.value, click: add }),
+                        CardSearch({ cards: cards.value, click: add, deleted }),
                   )
             )
       )

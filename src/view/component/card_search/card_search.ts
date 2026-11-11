@@ -2,11 +2,11 @@ import { Reactive } from "../../../model/lib/reactive.js";
 import { Component, react } from "../../lib/index.js";
 import { Provider } from "../../lib/provider.js";
 import * as view from "../card.js";
-import { column } from "../theme.js";
+import { column, Theme } from "../theme.js";
 
 const { div, input } = Component;
 
-export function CardSearch({ cards, click }: { cards: Card[], click?: (card: Card) => void }) {
+export function CardSearch({ cards, click, deleted }: { cards: Card[], click?: (card: Card) => void, deleted?:  (card: Card) => void}) {
       const signal = new Reactive(cards); 
       function search(e: Event) {
             const text = (e.target as HTMLInputElement).value;
@@ -25,7 +25,15 @@ export function CardSearch({ cards, click }: { cards: Card[], click?: (card: Car
             react([signal], () => 
                   div({ style: `overflow-y: scroll; height: 300px; padding-bottom: 300px; width: ${Provider.of(view.CardState).width + 20}px;` },
                         ...signal.value.map(card => 
-                              view.Card({ src: card.img, click: () => click?.(card) })
+                              div({ style: column() },
+                                    div({ 
+                                          style: `width: 32px; height: 32px; border-radius: 7px; align-self: end; font-size: 28px; display: flex; align-items: end; justify-content: center; border: 1px solid ${Provider.of(Theme).primary}`, 
+                                          click: () => deleted?.(card)
+                                    },
+                                          '⨯'
+                                    ),
+                                    view.Card({ src: card.img, click: () => click?.(card) })
+                              )
                         )
                   )
             )
