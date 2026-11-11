@@ -110,12 +110,12 @@ export function HomePage() {
             ...(FirebaseComponent.hasKey() ? [
                   input({ ...nickname.binding, placeholder: 'insert here your nickname' }), 
                   input({ ...opponent.binding, placeholder: 'insert here the opponent nickname'  }), 
+                  input({ ...game.binding, placeholder: 'insert here the game password' }), 
             ]: [
                   button({ click: () => Provider.of(Router).goto('/settings') },
                         'Cloud settings are missing, set it here'
                   )
             ]),
-            input({ ...game.binding, placeholder: 'insert here the game password' }), 
             ...board.decks.map(k => 
                   DeckSelector({ placeholder: `select the ${k} deck`, deckSelected: model => decks.set(k, model) }),
             ),

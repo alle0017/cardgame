@@ -49,7 +49,7 @@ export function DeckPage() {
             await Provider.of(DeckService).deleteCard({ ...card, _auto: crypto.randomUUID() });
             Provider.of(DeckService).getAllCards().then(stored => cards.value = stored).catch(console.error);
       }
-      return div({ style: `${column('20px')}` },
+      return div({ style: `width: 90vw; ${column('20px')}` },
             div({ style: `${row('10px')}` },
                   button({ click: () => Provider.of(Router).goto('/') },
                         'back'

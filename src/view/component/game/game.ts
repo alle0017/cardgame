@@ -33,7 +33,7 @@ function StackOptions(id: string): Options {
       }
 } 
 export function Game({ model }: { model: model.Game }) {
-      return div({ style: `align-items: center; ${column('10px')}` },
+      return div({ style: `width: 90vw; align-items: center; ${column('10px')}` },
             RemotePlayer({ model: model.remote }),
             div({ style: column() },
                   ...model.shared.entries().map(([id, model]) => 
