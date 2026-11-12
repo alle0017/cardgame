@@ -18,12 +18,25 @@ export class Stack implements Topic {
 
       @dispatch
       public add(card: Card) {
+            this.cards.value.unshift(card);
+            this.cards.dispatch();
+      }
+      @dispatch
+      public addToBottom(card: Card) {
             this.cards.value.push(card);
             this.cards.dispatch();
       }
       @dispatch
       public remove(card: Card) {
-            this.cards.value = this.cards.value.filter(c => c.id != card.id);
+            for (let i = 0; i < this.cards.value.length; i++) {
+                  const c = this.cards.value[i];
+                  if (c.id != card.id) {
+                        continue;
+                  }
+                  this.cards.value.splice(i, 1);
+                  this.cards.dispatch();
+                  break;
+            }
       }
 
       public pop() {
