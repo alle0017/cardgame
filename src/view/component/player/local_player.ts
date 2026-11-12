@@ -9,6 +9,14 @@ import { Stack } from "../../../model/components/stack.js";
 
 export function DeckOptions(id: string): Options {
       return {
+            draw() {
+                  const game = Provider.of(Game);
+                  if (game.local.decks.get(id)!.cards.value.length <= 0) {
+                        return;
+                  }
+                  const card = game.local.decks.get(id)!.draw()!;
+                  game.local.hand.add(card);
+            },
             async view() {
                   const game = Provider.of(Game);
                   await CardPicker(game.local.decks.get(id)!.cards.value);
@@ -19,14 +27,6 @@ export function DeckOptions(id: string): Options {
                   game.local.decks.get(id)!.remove(card);
                   game.local.hand.add(card);
             },
-            draw() {
-                  const game = Provider.of(Game);
-                  if (game.local.decks.get(id)!.cards.value.length <= 0) {
-                        return;
-                  }
-                  const card = game.local.decks.get(id)!.draw()!;
-                  game.local.hand.add(card);
-            },
             shuffle() {
                   const game = Provider.of(Game);
                   game.local.decks.get(id)!.shuffle();
@@ -35,6 +35,28 @@ export function DeckOptions(id: string): Options {
       }
 }
 export function ZoneOptions(id: string): Options {
+      const opts: Options = {}
+
+      for (const deck of Provider.of(Game).board.decks) {
+            opts[`add to top of ${deck} deck`] = async () => {
+                   const game = Provider.of(Game);
+                  if (game.local.zones.get(id)!.cards.value.length <= 0) {
+                        return;
+                  }
+                  const card = await CardPicker(game.local.zones.get(id)!.cards.value);
+                  game.local.hand.remove(card);
+                  game.local.decks.get(deck)!.add(card);
+            }
+            opts[`add to bottom of ${deck} deck`] = async () => {
+                  const game = Provider.of(Game);
+                  if (game.local.zones.get(id)!.cards.value.length <= 0) {
+                        return;
+                  }
+                  const card = await CardPicker(game.local.zones.get(id)!.cards.value);
+                  game.local.hand.remove(card);
+                  game.local.decks.get(deck)!.addToBottom(card);
+            }
+      }
       return {
             async view() {
                   const game = Provider.of(Game);
@@ -49,6 +71,7 @@ export function ZoneOptions(id: string): Options {
                   game.local.zones.get(id)!.remove(card);
                   game.local.hand.add(card);
             },
+            ...opts,
             exit: undefined
       }
 }
@@ -70,9 +93,14 @@ function HandOptions(): Options {
                   game.local.hand.remove(card);
                   game.local.decks.get(deck)!.add(card);
             }
+            opts[`add to bottom of ${deck} deck`] = (arg: Record<string, unknown>) => {
+                  const card = arg['card'] as Card;
+                  const game = Provider.of(Game);
+                  game.local.hand.remove(card);
+                  game.local.decks.get(deck)!.addToBottom(card);
+            }
       }
       return {
-            ...opts,
             async 'play into the field'(arg: Record<string, unknown>) {
                   const card = arg['card'] as Card;
                   const game = Provider.of(Game);
@@ -80,6 +108,7 @@ function HandOptions(): Options {
                   game.local.hand.remove(card);
                   zone.add(card);
             },
+            ...opts,
             exit: undefined
       }
 }
