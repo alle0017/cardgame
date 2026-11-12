@@ -33,16 +33,17 @@ export function DeckPage() {
             const cards = await Provider.of(DeckService).getDeck(model);
             deck.value = cards;
             Input.value = model.name;
+            name.value = model.name;
       }
       async function save(e: Event) {
             const btn = e.target as HTMLElement;
             if (!name.value.replaceAll(' ', '')) {
                   btn.style.borderColor = Provider.of(Theme).error;
+                  console.error('invalid naming', name.value);
                   return;
             }
 
             try {
-
                   await Provider.of(DeckService).createDeck(name.value, deck.value);
             } catch (e) {
                   console.error(e)
