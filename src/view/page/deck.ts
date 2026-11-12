@@ -1,7 +1,7 @@
 import { DeckService } from "../../service/deck.js";
 import { CardSearch } from "../component/card_search/card_search.js";
 import { Table } from "../component/table/table.js";
-import { column, row } from "../component/theme.js";
+import { column, row, Theme } from "../component/theme.js";
 import { Component, react, bind } from "../lib/index.js";
 import { Provider } from "../lib/provider.js";
 import { Reactive } from '../../model/lib/reactive.js';
@@ -34,11 +34,21 @@ export function DeckPage() {
             deck.value = cards;
             Input.value = model.name;
       }
-      async function save() {
+      async function save(e: Event) {
+            const btn = e.target as HTMLElement;
             if (!name.value.replaceAll(' ', '')) {
+                  btn.style.borderColor = Provider.of(Theme).error;
                   return;
             }
-            await Provider.of(DeckService).createDeck(name.value, deck.value);
+
+            try {
+
+                  await Provider.of(DeckService).createDeck(name.value, deck.value);
+            } catch (e) {
+                  console.error(e)
+                  btn.style.border = Provider.of(Theme).error;
+            }
+            btn.style.borderColor = Provider.of(Theme).primary;
       }
       function sort() {
             deck.value.sort((a,b) => a.img.localeCompare(b.img))

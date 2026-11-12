@@ -6,6 +6,7 @@ export class Theme {
       text = '#000'
       textPrimary = '#fff'
       background = '#fff'
+      error = '#ff7b7b'
 
       constructor() {
             for (const k of Object.keys(this)) {
@@ -28,7 +29,8 @@ export class Theme {
                   'accentSecondary',
                   'text',
                   'background',  
-                  'textPrimary'
+                  'textPrimary',
+                  'error'
             ]
       }
 }
