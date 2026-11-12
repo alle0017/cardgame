@@ -10,7 +10,7 @@ const { div } = Component;
 
 export function Hand({ model, options, hide }: { model: model.Hand, hide: boolean, options: Options }) {
       return react([model.cards], () =>
-            div({ style: `align-items: center; justify-content: center; overflow-x: scroll; width: ${Provider.of(CardState).width * 5}px; ${row()}` },
+            div({ style: `overflow-x: scroll; width: ${Provider.of(CardState).width * 5}px; ${row()}` },
                   ...model.cards.value.map(card => 
                         ContextMenuTrigger({ options, ctx: { card } }, 
                               hide ? Card({}) : Card({ src: card.img }),
