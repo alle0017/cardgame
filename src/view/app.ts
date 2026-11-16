@@ -1,5 +1,6 @@
 import { DeckService } from "../service/deck.js";
 import { CardState } from "./component/card.js";
+import { ComponentBuilder } from "./component/card_builder/component_builder.js";
 import { ZoneSelector } from "./component/player/zone_selector.js";
 import { Theme } from "./component/theme.js";
 import { style } from "./lib/index.js";
@@ -21,7 +22,8 @@ export function App() {
             '/game': props => GamePage(props as GamePageParams),
             '/deck': DeckPage,
             '/settings': SettingsPage,
-            '/board_builder': BoardBuilderPage
+            '/board_builder': BoardBuilderPage,
+            '/card_builder': ComponentBuilder,
       }, '/'))
 
       style(/*css*/`

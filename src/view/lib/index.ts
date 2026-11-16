@@ -32,6 +32,8 @@ export const element = (() => {
                         if (value) {
                               el.setAttribute("controls", "");
                         }
+                  } else if (name == 'textarea' && key == 'value') {
+                        (el as HTMLTextAreaElement).value = value as string;
                   } else {
                         el.setAttribute(key, (value as string));
                   }

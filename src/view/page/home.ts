@@ -128,6 +128,9 @@ export function HomePage() {
             button({ click: playSolo }, 
                   'Play solo'
             ),
+            button({ click: () => Provider.of(Router).goto('/card_builder') }, 
+                  'Build card'
+            ),       
             button({ click: () => Provider.of(Router).goto('/deck') }, 
                   'Build deck'
             ),
