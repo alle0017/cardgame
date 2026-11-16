@@ -1,5 +1,5 @@
-import { AST } from "./component_tree.js";
 import { Component } from "../../lib/index.js";
+import { AST } from "../../../service/store.js";
 
 
 export function Preview(ast: AST): HTMLElement {

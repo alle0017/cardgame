@@ -1,6 +1,6 @@
 import { Component, } from "../../lib/index.js";
 import { column, row } from "../theme.js";
-import { AST } from "./component_tree.js";
+import { AST } from "../../../service/store.js";
 
 const { div, button, textarea, input } = Component;
 

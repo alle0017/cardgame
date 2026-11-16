@@ -1,33 +1,24 @@
 import { Reactive } from "../../../model/lib/reactive.js";
+import { AST } from "../../../service/store.js";
 import { Component, react } from "../../lib/index.js";
 import { Provider } from "../../lib/provider.js";
 import { column, row, Theme } from "../theme.js";
 
 const { div, button } = Component;
 
-export type AST = {
-      name: string,
-      css: string,
-      children: AST[],
-      text: string,
-      component: string,
-      image: string
-}
+
 type Props = {
       up?(): void
       down?(): void
       updated(): void
       selected(ast: AST): void
 }
-
-export const Box = (): AST => ({ name: 'div', css: '', children: [], text: '', component: 'div', image: '' })
-
 export function ComponentTree({ up, down, updated, selected }: Props, child: AST): HTMLElement {
 
       const signal = new Reactive(true);
 
       function createNew() {
-            child.children.push(Box());
+            child.children.push(AST.box());
             signal.dispatch();
             updated();
       }
@@ -48,7 +39,6 @@ export function ComponentTree({ up, down, updated, selected }: Props, child: AST
       function select() {
             signal.value = !signal.value;
             selected(child);
-            console.log(child)
       }
       const btnStyle = `justify-contents: center; border: none; align-items: center; width: 32px; height: 32px; ${column()}`;
       return div({ style: column() },
