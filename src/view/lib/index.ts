@@ -21,19 +21,19 @@ export const element = (() => {
             if (children) {
                   el.append(...children);
             }
+
             for (const [key, value] of Object.entries(prop)) {
                   if (typeof value === "function") {
                         el.addEventListener(key as keyof HTMLElementEventMap, value as EventListenerOrEventListenerObject);
                   } else if (key === 'class') {
                         el.classList.add(...(value as string).split(" "));
-                  } else if (key === 'id') {
-                        el.id = (value as string);
-                  } else if (key === "controls") {
+                  } else if (key in el) {
+                        //@ts-ignore
+                        el[key] = value;
+                  } else if (typeof value == 'boolean') {
                         if (value) {
-                              el.setAttribute("controls", "");
+                              el.setAttribute(key, "");
                         }
-                  } else if (name == 'textarea' && key == 'value') {
-                        (el as HTMLTextAreaElement).value = value as string;
                   } else {
                         el.setAttribute(key, (value as string));
                   }

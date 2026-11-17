@@ -1,6 +1,7 @@
 import { Component, } from "../../lib/index.js";
 import { column, row } from "../theme.js";
 import { AST } from "../../../service/store.js";
+import { icon, Icons } from "../icons.js";
 
 const { div, button, textarea, input } = Component;
 
@@ -46,11 +47,11 @@ export function ComponentAttributes({ save }: Props, child: AST): HTMLElement {
             div({ style: column() },
                   'Image',
                   div({ style: row() },
-                        button({ click: () => picker.click(), style: 'overflow: hidden;' },
-                              child.image ? child.image: 'Insert image here...'
-                        ),
-                        button({ click: () => { child.image = ''; save() }}, 
-                              'Clear'
+                        button({ click: () => picker.click(), class: 'icon-btn', title: child.image ? child.image: 'Insert image here...' },
+                              icon({}, Icons.LoadImage)
+                        ),    
+                        button({ class: 'icon-btn', click: () => { child.image = ''; save() }}, 
+                              icon({}, Icons.Trash)
                         )
                   )
             ),

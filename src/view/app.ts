@@ -32,6 +32,9 @@ export function App() {
                   color: ${Provider.of(Theme).text};
                   font-family: system-ui;
             }
+            svg {
+                  background-color: transparent;
+            }
             body {
                   display: flex;
                   flex-direction: column;
@@ -59,6 +62,17 @@ export function App() {
             }     
             input:focus, select:focus {
                   outline: none;
+            }
+            .icon-btn {
+                  width: 32px;
+                  height: 32px;
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  background-color: ${Provider.of(Theme).accentPrimary};
+            }
+            .icon-btn:hover {
+                  background-color: ${Provider.of(Theme).accentSecondary};
             }
       `)
       Provider.of(Router).mount();

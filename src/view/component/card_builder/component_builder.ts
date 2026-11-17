@@ -1,13 +1,16 @@
 import { ComponentTree } from "./component_tree.js";
-import { Component, react, style, } from "../../lib/index.js";
-import { column, row, Theme } from "../theme.js";
+import { Component, react, } from "../../lib/index.js";
+import { row, Theme } from "../theme.js";
 import { Provider } from "../../lib/provider.js";
 import { Reactive } from "../../../model/lib/reactive.js";
 import { ComponentAttributes } from "./component_attributes.js";
 import { Preview } from "./preview.js";
 import { AST, CardTemplateRepository } from "../../../service/store.js";
+import { icon, Icons } from "../icons.js";
+import { saveAsImage } from "./image.service.js";
+import { DeckService } from "../../../service/deck.js";
 
-const { div, input, select, option } = Component;
+const { div, select, option, button } = Component;
 
 export function ComponentBuilder() {
       const root = new Reactive(AST.box())
@@ -32,14 +35,31 @@ export function ComponentBuilder() {
                   root.value = AST.box();
             }
       }
+      function duplicate() {
+            root.value = root.value.clone();
+      }
+
+      async function save() {
+            const url = await saveAsImage(root.value)
+            const service = Provider.of(DeckService);
+            await service.createCard({ id: 0, name: root.value.name, img: url })            
+      }
       return div({ style: row() },
             div({ style: `overflow-y: scroll; height: 99vh; width: 300px; border-right: 2px solid ${Provider.of(Theme).primary}`},
-                  react([options], () =>
-                        select({ change: load, style: `width: 200px;` },
-                              option({ value: "" }, "New..."),
-                              ...options.value.map(a => 
-                                    option({ value: a.name }, a.name)
+                  div({ style: `align-items: center; ${row()}` },
+                        react([options], () =>
+                              select({ change: load, style: `width: 200px;` },
+                                    option({ value: "" }, "New..."),
+                                    ...options.value.map(a => 
+                                          option({ value: a.name }, a.name)
+                                    )
                               )
+                        ),
+                        button({ class: 'icon-btn', click: duplicate }, 
+                              icon({ }, Icons.Copy)
+                        ),
+                        button({ class: 'icon-btn', click: save }, 
+                              icon({ }, Icons.SaveCollection)
                         )
                   ),
                   react([root], () => 
