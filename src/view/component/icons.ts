@@ -33,8 +33,10 @@ export const Icons = {
       `,
       Upload: `
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" height="24px" width="24px" fill="#currentColor"><path d="M11,19h2V14.83l1.6,1.6L16,15l-4-4L8,15l1.43,1.4L11,14.83V19ZM6,22q-0.82,0-1.41-0.59T4,20V4Q4,3.17 4.59,2.59T6,2h8l6,6V20q0,0.82-0.59,1.41T18,22H6ZM13,9V4H6V20H18V9H13ZM6,4V9V4V9V20V4Z"/></svg>
+      `,
+      AddRow: `
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" height="24px" width="24px" fill="#currentColor"><path d="M5,10H19V4H5v6ZM3,20V2H21V20H17q0-0.25 0-0.49T17,19t0-0.51T17,18h2V12H5v6H7q0,0.25 0,0.49T7,19t0,0.51T7,20H3Zm9-8Zm0-2v2V10Zm0,0ZM11,22V20H9V18h2V16h2v2h2v2H13v2H11Z"/></svg>
       `
-
 } as const
 
 type IconArgs = { width?: number, height?: number, color?: string }

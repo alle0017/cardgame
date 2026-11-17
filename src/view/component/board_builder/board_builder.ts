@@ -54,12 +54,14 @@ export function BoardBuilder() {
             ),
             div({ style: column() },
                   button({ 
+                        class: 'icon-btn',
                         click() {
                               rows.value.push([]);
                               rows.dispatch();
                         }
                   }, 
-                  'Add row'),
+                        icon({}, Icons.AddRow)
+                  ),
                   react([rows], () =>
                         div({ style: row() },
                               ...rows.value.map((r, i) => 

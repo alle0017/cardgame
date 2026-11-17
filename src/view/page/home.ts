@@ -128,18 +128,18 @@ export function HomePage() {
             button({ click: playSolo }, 
                   'Play solo'
             ),
-            button({ click: () => Provider.of(Router).goto('/card_builder') }, 
-                  'Build card'
-            ),       
             button({ click: () => Provider.of(Router).goto('/deck') }, 
                   'Build deck'
             ),
-            button({ click: importNewCards }, 
-                  'Import cards'
-            ),     
+            button({ click: () => Provider.of(Router).goto('/card_builder') }, 
+                  'Build card'
+            ),       
             button({ click: () => Provider.of(Router).goto('/board_builder') }, 
                   'Build board'
-            ),       
+            ),  
+            button({ click: importNewCards }, 
+                  'Import cards'
+            ),      
             button({ click: () => Provider.of(Router).goto('/settings') }, 
                   'Settings'
             ),
