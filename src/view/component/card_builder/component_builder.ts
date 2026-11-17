@@ -9,6 +9,7 @@ import { AST, CardTemplateRepository } from "../../../service/store.js";
 import { icon, Icons } from "../icons.js";
 import { saveAsImage } from "./image.service.js";
 import { DeckService } from "../../../service/deck.js";
+import { Router } from "../../lib/router.js";
 
 const { div, select, option, button } = Component;
 
@@ -47,8 +48,11 @@ export function ComponentBuilder() {
       return div({ style: row() },
             div({ style: `overflow-y: scroll; height: 99vh; width: 300px; border-right: 2px solid ${Provider.of(Theme).primary}`},
                   div({ style: `align-items: center; ${row()}` },
+                        button({ class: 'icon-btn', click: () => Provider.of(Router).goto('/') }, 
+                              icon({ }, Icons.Back)
+                        ),
                         react([options], () =>
-                              select({ change: load, style: `width: 200px;` },
+                              select({ change: load, style: `width: 160px;` },
                                     option({ value: "" }, "New..."),
                                     ...options.value.map(a => 
                                           option({ value: a.name }, a.name)

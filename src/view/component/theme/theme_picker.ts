@@ -1,5 +1,6 @@
 import { Component, } from "../../lib/index.js";
 import { Provider } from "../../lib/provider.js";
+import { icon, Icons } from "../icons.js";
 import { column, row, Theme } from "../theme.js";
 
 
@@ -48,8 +49,10 @@ export function ThemePicker() {
                               })
                         )
                   ),
-                  button({ click: () => theme.update() }, 
-                        'Save'
+                  button({ class: 'icon-btn', click: () => theme.update() }, 
+                        icon({},
+                              Icons.Upload
+                        )
                   )
             )
       )

@@ -67,6 +67,7 @@ export function BoardBuilder() {
                                           div({ style: row() },
                                                 `Field's row ${i}`,
                                                 button({ 
+                                                      class: 'icon-btn',
                                                       click() {
                                                             if (r.length != 0) {
                                                                   return;
@@ -74,7 +75,11 @@ export function BoardBuilder() {
                                                             rows.value.splice(i, 1);
                                                             rows.dispatch();
                                                       }
-                                                }, 'Delete'),
+                                                }, 
+                                                      icon({},
+                                                            Icons.Trash
+                                                      )
+                                                ),
                                           ),
                                           List({ 
                                                 value: r,
