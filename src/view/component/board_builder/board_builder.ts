@@ -3,6 +3,7 @@ import { Reactive } from "../../../model/lib/reactive.js";
 import { Component, react, } from "../../lib/index.js"
 import { Provider } from "../../lib/provider.js";
 import { Router } from "../../lib/router.js";
+import { icon, Icons } from "../icons.js";
 import { column, row, Theme } from "../theme.js";
 import { List } from "./list.js";
 
@@ -14,7 +15,9 @@ export function BoardBuilder() {
       const container = `padding: 10px; border-radius: 7px; width: 450px; height: 400px; border: 1px solid ${Provider.of(Theme).primary}; ${column()}`;
       return div({ style: column() },
             div({ style: row() },
-                  button({ click: () => Provider.of(Router).goto('/') }, 'Back'),
+                  button({ class: 'icon-btn', click: () => Provider.of(Router).goto('/') }, 
+                        icon({}, Icons.Back)
+                  ),
             ),
             div({ style: row() },
                   div({ style: container},

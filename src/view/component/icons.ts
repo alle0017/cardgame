@@ -21,7 +21,14 @@ export const Icons = {
       `,
       Trash: `
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" height="24px" width="24px" fill="#currentColor"><path d="M7,21q-0.82,0-1.41-0.59T5,19V6H4V4H9V3h6V4h5V6H19V19q0,0.82-0.59,1.41T17,21H7ZM17,6H7V19H17V6ZM9,17h2V8H9v9Zm4,0h2V8H13v9ZM7,6V19V6Z"/></svg>
+      `,
+      Back: `
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" height="24px" width="24px" fill="#currentColor"><path d="M7.83,13l5.6,5.6L12,20L4,12l8-8l1.43,1.4L7.83,11H20v2H7.83Z"/></svg>
+      `,
+      Sort: `
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" height="24px" width="24px" fill="#currentColor"><path d="M2,17L5.75,7H7.9l3.75,10H9.6L8.75,14.6H4.9L4.1,17H2Zm3.5-4.1H8.1L6.9,9.15H6.75L5.5,12.9ZM13.7,17V15.1l5.05-6.3H13.9V7h7.05V8.9l-5,6.3H21V17H13.7ZM9,5l3-3l3,3H9Zm3,17L9,19h6l-3,3Z"/></svg>
       `
+
 } as const
 
 type IconArgs = { width?: number, height?: number, color?: string }

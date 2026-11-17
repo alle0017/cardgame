@@ -2,6 +2,7 @@ import { getBoard, setBoard } from "../../model/game.js";
 import { FirebaseComponent } from "../../model/lib/firebase/firebase.js";
 import { DeckService } from "../../service/deck.js";
 import { CloudKeyInput } from "../component/cloud_key/cloud_key_input.js";
+import { icon, Icons } from "../component/icons.js";
 import { column, } from "../component/theme.js";
 import { ThemePicker } from "../component/theme/theme_picker.js";
 import { Component, } from "../lib/index.js";
@@ -88,8 +89,8 @@ async function importSettings() {
 }
 export function SettingsPage() {
       return div({ style: `width: 600px; ${column()}` },
-            button({ style: 'align-self: start;', click: () => Provider.of(Router).goto('/') }, 
-                  'Back' 
+            button({ class: 'icon-btn', style: 'align-self: start;', click: () => Provider.of(Router).goto('/') }, 
+                  icon({}, Icons.Back)
             ),
             h4({}, 'Share'),
             details({ style: ` padding: 10px; width: 100%;` },

@@ -9,6 +9,7 @@ import { DeckModel } from "../../service/store.js";
 import { DeckSelector } from "../component/deck_selector/deck_selector.js";
 import { CardState } from "../component/card.js";
 import { Router } from "../lib/router.js";
+import { icon, Icons } from "../component/icons.js";
 
 const { div, input, button, } = Component;
 
@@ -61,17 +62,17 @@ export function DeckPage() {
             Provider.of(DeckService).getAllCards().then(stored => cards.value = stored).catch(console.error);
       }
       return div({ style: `width: 90vw; ${column('20px')}` },
-            div({ style: `${row('10px')}` },
-                  button({ click: () => Provider.of(Router).goto('/') },
-                        'back'
+            div({ style: `align-items: center; ${row('10px')}` },
+                  button({ class: 'icon-btn', click: () => Provider.of(Router).goto('/') },
+                        icon({}, Icons.Back)
                   ),
                   Input,
                   DeckSelector({ placeholder: 'select the deck', deckSelected: loadDeck }),
-                  button({ click: save },
-                        'save'
+                  button({ class: 'icon-btn', click: save },
+                        icon({}, Icons.Save)
                   ),
-                  button({ click: sort },
-                        'sort'
+                  button({ class: 'icon-btn', click: sort },
+                        icon({}, Icons.Sort)
                   )
             ),
             div({ style: `${row('10px')}` },
