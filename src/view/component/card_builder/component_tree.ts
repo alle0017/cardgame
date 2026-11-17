@@ -2,6 +2,7 @@ import { Reactive } from "../../../model/lib/reactive.js";
 import { AST } from "../../../service/store.js";
 import { Component, react } from "../../lib/index.js";
 import { Provider } from "../../lib/provider.js";
+import { icon, Icons } from "../icons.js";
 import { column, row, Theme } from "../theme.js";
 
 const { div, button } = Component;
@@ -12,8 +13,9 @@ type Props = {
       down?(): void
       updated(): void
       selected(ast: AST): void
+      deleted?(): void
 }
-export function ComponentTree({ up, down, updated, selected }: Props, child: AST): HTMLElement {
+export function ComponentTree({ up, down, updated, selected, deleted }: Props, child: AST): HTMLElement {
 
       const signal = new Reactive(true);
 
@@ -40,6 +42,10 @@ export function ComponentTree({ up, down, updated, selected }: Props, child: AST
             signal.value = !signal.value;
             selected(child);
       }
+      function deleteChild(i: number) {
+            child.children.splice(i, 1)
+            updated();
+      }
       const btnStyle = `justify-contents: center; border: none; align-items: center; width: 32px; height: 32px; ${column()}`;
       return div({ style: column() },
             div({}, 
@@ -50,12 +56,18 @@ export function ComponentTree({ up, down, updated, selected }: Props, child: AST
                         button({ click: createNew, style: btnStyle }, '+'),
                         up ? button({ click: up, style: btnStyle }, '↑'): '',
                         down ? button({ click: down, style: btnStyle }, '↓'): '',
+                        deleted ? button({ click: deleted, class: 'icon-btn' }, 
+                              icon({}, 
+                                    Icons.Trash
+                              )
+                        ): ''
                   )
             ),
             react([signal], () =>
                   div({ style: `padding-left: 5px; border-left: 2px solid ${Provider.of(Theme).primary}; ${column()}` },
                         ...child.children.filter(() => signal.value).map((node, i) => 
                               ComponentTree({ 
+                                    deleted: () => deleteChild(i),
                                     selected,
                                     updated,
                                     up:  i == 0 ?  undefined: () => moveUp(node, i),
