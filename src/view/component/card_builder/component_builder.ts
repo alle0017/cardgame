@@ -10,6 +10,7 @@ import { icon, Icons } from "../icons.js";
 import { saveAsImage } from "./image.service.js";
 import { DeckService } from "../../../service/deck.js";
 import { Router } from "../../lib/router.js";
+import { fileAsDataUrl } from "./clipboard.service.js";
 
 const { div, select, option, button } = Component;
 
@@ -45,6 +46,24 @@ export function ComponentBuilder() {
             const service = Provider.of(DeckService);
             await service.createCard({ id: 0, name: root.value.name, img: url })            
       }
+      document.body.addEventListener('paste', async (e) => {
+            if (!e.clipboardData) {
+                  return;
+            }
+            for (const item of e.clipboardData.items) {
+                  if (item.kind !== "file" || !item.type.startsWith("image/")) {
+                        continue;
+                  }
+                  const file = item.getAsFile();
+                  if (!file) {
+                        continue;
+                  }
+                  const url = await fileAsDataUrl(file)
+                  focus.value.image = url;
+                  root.dispatch();
+                  return;
+            }
+      })
       return div({ style: row() },
             div({ style: `overflow-y: scroll; height: 99vh; width: 300px; border-right: 2px solid ${Provider.of(Theme).primary}`},
                   div({ style: `align-items: center; ${row()}` },

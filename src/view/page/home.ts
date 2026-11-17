@@ -8,6 +8,7 @@ import { Component, bind } from "../lib/index.js";
 import { Provider } from "../lib/provider.js";
 import { Router } from "../lib/router.js";
 import type { GamePageParams } from "./game.js";
+import { fileAsDataUrl } from "../component/card_builder/clipboard.service.js";
 
 const { div, input, button, hr } = Component;
 
@@ -15,15 +16,6 @@ export type ImportedImage = {
     img: string;
     name: string;
 };
-function fileAsDataUrl(file: File | Blob): Promise<string> {
-      return new Promise((resolve, reject) => {
-            const reader = new FileReader();
-            reader.onload = () => resolve(reader.result as string);
-            reader.onerror = () => reject(new Error(reader.error?.message));
-            reader.readAsDataURL(file);
-      });
-}
-
 export function importImages(): Promise<ImportedImage[]> {
       return new Promise((resolve) => {
             const input = document.createElement("input");
