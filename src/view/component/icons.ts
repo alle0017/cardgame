@@ -36,6 +36,9 @@ export const Icons = {
       `,
       AddRow: `
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" height="24px" width="24px" fill="#currentColor"><path d="M5,10H19V4H5v6ZM3,20V2H21V20H17q0-0.25 0-0.49T17,19t0-0.51T17,18h2V12H5v6H7q0,0.25 0,0.49T7,19t0,0.51T7,20H3Zm9-8Zm0-2v2V10Zm0,0ZM11,22V20H9V18h2V16h2v2h2v2H13v2H11Z"/></svg>
+      `,
+      Wrap: `
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" height="24px" width="24px" fill="#currentColor"><path d="M4,20V4H6V20H4Zm14,0V4h2V20H18Zm-7.4-2.45L7.05,14l3.55-3.53l1.4,1.4L10.88,13H13q0.83,0 1.41-0.59T15,11q0-0.83-0.59-1.41T13,9H7V7h6q1.65,0 2.83,1.17T17,11t-1.17,2.82T13,15H10.88L12,16.13l-1.4,1.43Z"/></svg>
       `
 } as const
 

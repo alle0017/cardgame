@@ -59,7 +59,7 @@ export function ComponentAttributes({ save }: Props, child: AST): HTMLElement {
             ),
             div({ style: column() },
                   'Style',
-                  input({ value: child.css, placeholder: 'Put here the style...', change: e => { child.css = (e.target as HTMLTextAreaElement).value; save() } }),
+                  textarea({ value: child.css, style: areaStyle, placeholder: 'Put here the style...', change: e => { child.css = (e.target as HTMLTextAreaElement).value; save() } }),
             ),
             div({ style: column() },
                   'Text',
