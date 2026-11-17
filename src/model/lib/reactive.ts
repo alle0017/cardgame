@@ -26,7 +26,6 @@ export class Reactive<T> {
                   sub();
             }
       }
-
       public subscribe(fn: () => void) {
             this.subscribers.add(fn);
       }

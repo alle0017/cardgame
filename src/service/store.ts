@@ -32,7 +32,7 @@ export class DeckModel extends Entity {
       public cards: string[] = [];
 }
 
-@schema('game', 1, { CardModel, DeckModel, AST })
+@schema('game', 2, { CardModel, DeckModel, AST })
 class Database extends Datasource {}
 
 export class CardRepository extends Repository<CardModel> {
