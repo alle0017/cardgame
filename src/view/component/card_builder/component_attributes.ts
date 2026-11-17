@@ -50,9 +50,11 @@ export function ComponentAttributes({ save }: Props, child: AST): HTMLElement {
                         button({ click: () => picker.click(), class: 'icon-btn', title: child.image ? child.image: 'Insert image here...' },
                               icon({}, Icons.LoadImage)
                         ),    
-                        button({ class: 'icon-btn', click: () => { child.image = ''; save() }}, 
-                              icon({}, Icons.Trash)
-                        )
+                        child.image ?
+                              button({ class: 'icon-btn', click: () => { child.image = ''; save() }}, 
+                                    icon({}, Icons.Trash)
+                              )
+                        : ''
                   )
             ),
             div({ style: column() },
