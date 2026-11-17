@@ -16,15 +16,15 @@ export class AST extends Entity {
       public component: string = ''
       public image: string = ''
 
-      public clone() {
+      public static clone(ast: AST) {
             const root = new AST;
 
-            root.component = this.component;
-            root.name = this.name;
-            root.css = this.css;
-            root.text = this.text;
-            root.image = this.image;
-            root.children.push(...this.children.map(c => c.clone()));
+            root.component = ast.component;
+            root.name = ast.name;
+            root.css = ast.css;
+            root.text = ast.text;
+            root.image = ast.image;
+            root.children.push(...ast.children.map(c => AST.clone(c)));
             return root; 
       }
 }

@@ -36,9 +36,10 @@ export function ComponentBuilder() {
             } else {
                   root.value = AST.box();
             }
+            focus.value = root.value;
       }
       function duplicate() {
-            root.value = root.value.clone();
+            root.value = AST.clone(root.value);
       }
 
       async function save() {
