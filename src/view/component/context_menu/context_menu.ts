@@ -36,7 +36,7 @@ export class ContextMenu {
                         max-width: 280px;
                         padding: 4px;
                         box-sizing: border-box;
-                        color: ${theme.text};
+                        color: ${theme.fg};
                         border: 1px solid ${theme.primary};
                         border-radius: 8px;
                         box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4),
@@ -71,7 +71,7 @@ export class ContextMenu {
                               mouseenter: event => {
                                     const el = (event.currentTarget as HTMLElement);
                                     el.style.backgroundColor = theme.primary;
-                                    el.style.color = theme.textPrimary;
+                                    el.style.color = theme.fgPrimary;
                               },
                               mouseleave: event => {
                                     const el = (event.currentTarget as HTMLElement);

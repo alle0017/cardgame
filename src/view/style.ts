@@ -4,28 +4,28 @@ import { Theme } from "./component/theme.js"
 export function Stylesheet() {
       style(/*css*/`
             :root {
-            --primary: #ffffff;
-            /*The default color value for the brand color*/
-            --primary-emphasis: #eee;
-            /*The default color value for the brand color*/
-            --fg: #292929;
-            /*Accessible text color (against body, plus subtle and muted color tokens)*/
-            --fg-emphasis: #414141;
-            /*Emphasized text color for use with muted background tokens*/
-            --bg: #fff;
-            /*For solid colored backgrounds with high contrast*/
-            --bg-emphasis: #e1e1e1;
-            --border-color: #292929;
-            /*Borders and dividers*/
-            --border: 1.5px solid var(--border-color);
-            --fg-primary: #444;
-            /*Text color that needs to be readable on the base and bg colors*/
-            --fg-primary-emphasis: #333;
-            /*Text color that needs to be readable on the base and bg colors*/
-            --shadow: 1.5px 1.5px 2px var(--bg-emphasis);
-            --error: #ff3e5b;
-            --error-emphasis: #cd3249;
-            --fg-error: #fff;
+                  --primary: ${Provider.of(Theme).primary};
+                  /*The default color value for the brand color*/
+                  --primary-emphasis: ${Provider.of(Theme).primaryEmphasis};
+                  /*The default color value for the brand color*/
+                  --fg: ${Provider.of(Theme).fg};
+                  /*Accessible text color (against body, plus subtle and muted color tokens)*/
+                  --fg-emphasis: ${Provider.of(Theme).fgEmphasis};
+                  /*Emphasized text color for use with muted background tokens*/
+                  --bg: #fff;
+                  /*For solid colored backgrounds with high contrast*/
+                  --bg-emphasis: ${Provider.of(Theme).bgEmphasis};
+                  --border-color: ${Provider.of(Theme).borderColor};
+                  /*Borders and dividers*/
+                  --border: ${Provider.of(Theme).border};
+                  --fg-primary: ${Provider.of(Theme).fgPrimary};
+                  /*Text color that needs to be readable on the base and bg colors*/
+                  --fg-primary-emphasis: ${Provider.of(Theme).fgPrimaryEmphasis};
+                  /*Text color that needs to be readable on the base and bg colors*/
+                  --shadow: ${Provider.of(Theme).shadow};
+                  --error: ${Provider.of(Theme).error};
+                  --error-emphasis: ${Provider.of(Theme).errorEmphasis};
+                  --fg-error: ${Provider.of(Theme).fgError};
             }
 
             body {
@@ -230,7 +230,7 @@ export function Stylesheet() {
                   right: 10px;
                   top: 10px;
                   width: 300px;
-                  height: 80px;
+                  height: 50px;
                   border-radius: 4px;
                   background-color: var(--error);
                   border: 2px solid var(--error-emphasis);

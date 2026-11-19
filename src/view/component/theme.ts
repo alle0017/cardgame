@@ -1,12 +1,28 @@
 export class Theme {
-      primary = '#000';
-      secondary = '#000';
-      accentPrimary = '#fff';
-      accentSecondary = '#000'
       text = '#000'
       textPrimary = '#fff'
-      background = '#fff'
-      error = '#ff7b7b'
+      primary = '#ffffff';
+      /*The default color value for the brand color*/
+      primaryEmphasis = '#eee';
+      /*The default color value for the brand color*/
+      fg = '#292929';
+      /*Accessible text color (against body, plus subtle and muted color tokens)*/
+      fgEmphasis = '#414141';
+      /*Emphasized text color for use with muted background tokens*/
+      bg = '#fff';
+      /*For solid colored backgrounds with high contrast*/
+      bgEmphasis = '#e1e1e1';
+      borderColor = '#292929';
+      /*Borders and dividers*/
+      border = '1.5px solid var(--border-color)';
+      fgPrimary = '#444';
+      /*Text color that needs to be readable on the base and bg colors*/
+      fgPrimaryEmphasis = '#333';
+      /*Text color that needs to be readable on the base and bg colors*/
+      shadow = '1.5px 1.5px 2px var(--bg-emphasis)';
+      error = '#ff3e5b';
+      errorEmphasis = '#cd3249';
+      fgError = '#fff';
 
       constructor() {
             for (const k of Object.keys(this)) {
@@ -24,13 +40,32 @@ export class Theme {
       public colors(): (keyof this)[] {
             return [
                   'primary',
-                  'secondary',
-                  'accentPrimary', 
-                  'accentSecondary',
-                  'text',
-                  'background',  
-                  'textPrimary',
-                  'error'
+                  /*The default color value for the brand color*/
+                  'primaryEmphasis',
+                  /*The default color value for the brand color*/
+                  'fg',
+                  /*Accessible text color (against body, plus subtle and muted color tokens)*/
+                  'fgEmphasis',
+                  /*Emphasized text color for use with muted background tokens*/
+                  'bg',
+                  /*For solid colored backgrounds with high contrast*/
+                  'bgEmphasis',
+                  'borderColor',
+                  /*Borders and dividers*/
+                  'fgPrimary',
+                  /*Text color that needs to be readable on the base and bg colors*/
+                  'fgPrimaryEmphasis',
+                  /*Text color that needs to be readable on the base and bg colors*/
+                  'error',
+                  'errorEmphasis',
+                  'fgError',
+            ]
+      }
+
+      public fields(): (keyof this)[] {
+            return [
+                  'shadow',
+                  'border',
             ]
       }
 }

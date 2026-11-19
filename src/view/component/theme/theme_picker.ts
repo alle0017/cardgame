@@ -19,18 +19,15 @@ function ColorPicker({ color, label, onInput }: { color: string, label: string, 
 }
 export function ThemePicker() {
       const theme = Provider.of(Theme)
-      const colors = theme.colors();
-      const half = Math.ceil(colors.length/2);
-      const upper = colors.slice(0, half);
-      const lower = colors.slice(half);
       
       return details({ style: ` padding: 10px; width: 100%;`},
             summary({ style: 'margin-bottom: 30px;' },
                   'Customize the website by modifying the theme'
             ),
             div({ style: column() },
-                  div({ style: row() },
-                        ...upper
+                  div({ style: column() },
+                        ...theme
+                        .colors()
                         .map(prop => ColorPicker({ 
                                     color: theme[prop] as string, 
                                     label: prop, 
@@ -39,13 +36,14 @@ export function ThemePicker() {
                               })
                         )
                   ),
-                  div({ style: row() },
-                        ...lower
-                        .map(prop => ColorPicker({ 
-                                    color: theme[prop] as string, 
-                                    label: prop, 
+                  div({ style: column() },
+                        ...theme
+                        .fields()
+                        .map(prop => input({ 
+                                    value: theme[prop] as string, 
+                                    placeholder: prop, 
                                     //@ts-expect-error
-                                    onInput: e => (theme[prop] = (e.target as HTMLInputElement).value) 
+                                    input: e => (theme[prop] = (e.target as HTMLInputElement).value) 
                               })
                         )
                   ),
