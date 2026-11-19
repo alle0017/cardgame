@@ -189,6 +189,18 @@ export function Stylesheet() {
                   height: .5px;
             }
 
+            .icon-btn-bar {
+                  height: 32px; 
+                  align-items: center;
+                  display: flex;
+                  flex-direction: row;
+                  gap: 10px;
+            }
+            .icon-btn-bar > .icon-btn {
+                  border: none;
+                  box-shadow: none;
+            }
+
             .box, .card {
                   border-radius: 4px;
                   border: var(--border);

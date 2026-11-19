@@ -61,29 +61,34 @@ export function DeckPage() {
             await Provider.of(DeckService).deleteCard({ ...card, _auto: crypto.randomUUID() });
             Provider.of(DeckService).getAllCards().then(stored => cards.value = stored).catch(console.error);
       }
-      return div({ style: `width: 90vw; ${column('20px')}` },
-            div({ style: `align-items: center; ${row('10px')}` },
-                  button({ class: 'icon-btn', click: () => Provider.of(Router).goto('/') },
-                        icon({}, Icons.Back)
+      return div({ style: `width: 100%; height: 80vh; padding: 20px; ${row('20px')}` },
+            div({ style: `padding: 20px; ${column('20px')}` },
+                  div({ style: `align-items: center; ${row('10px')}` },
+                        button({ class: 'icon-btn', click: () => Provider.of(Router).goto('/') },
+                              icon({}, Icons.Back)
+                        ),
+                        Input,
+                        DeckSelector({ placeholder: 'select the deck', deckSelected: loadDeck }),
+                        button({ class: 'icon-btn', click: save },
+                              icon({}, Icons.Save)
+                        ),
+                        button({ class: 'icon-btn', click: sort },
+                              icon({}, Icons.Sort)
+                        )
                   ),
-                  Input,
-                  DeckSelector({ placeholder: 'select the deck', deckSelected: loadDeck }),
-                  button({ class: 'icon-btn', click: save },
-                        icon({}, Icons.Save)
-                  ),
-                  button({ class: 'icon-btn', click: sort },
-                        icon({}, Icons.Sort)
+                  div({ style: `${row('10px')}` },
+                        div({ style: `width: ${Provider.of(CardState).width * 8}px; height: 70vh; overflow-y: scroll;`},
+                              react([deck], () => 
+                                    Table({ cards: deck.value, click: remove }),
+                              ),
+                        ),
                   )
             ),
-            div({ style: `${row('10px')}` },
-                  div({ style: `width: ${Provider.of(CardState).width * 8}px; height: 70vh; overflow-y: scroll;`},
-                        react([deck], () => 
-                              Table({ cards: deck.value, click: remove }),
-                        ),
-                  ),
+            div({ style: 'position: absolute; right: 0px; width: 300px; height: 100%;' },
                   react([cards], () => 
                         CardSearch({ cards: cards.value, click: add, deleted }),
                   )
             )
       )
+      
 }

@@ -48,7 +48,7 @@ export function ComponentTree({ up, down, updated, selected, deleted }: Props, c
       }
       return div({ style: column() },
             div({}, 
-                  div({ style: `height: 32px; align-items: center; ${row()}` },
+                  div({ class: 'icon-btn-bar' },
                         div({ style: 'width: 100px;', click: select },
                               child.name,
                         ),
