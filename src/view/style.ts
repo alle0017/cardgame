@@ -134,7 +134,11 @@ export function Stylesheet() {
                   overflow-x: scroll;
                   overflow-y: hidden;
             }
-            .x-scroll, .scroll {
+            .xy-scroll {
+                  overflow-x: scroll;
+                  overflow-y: hidden;
+            }
+            .x-scroll, .scroll, .xy-scroll {
                   -ms-overflow-style: none;
                   scrollbar-width: none;
             }
