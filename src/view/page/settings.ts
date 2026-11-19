@@ -9,7 +9,7 @@ import { importSettings, downloadSettings } from "./settings.service.js";
 const { div, hr, h4, button, details, summary } = Component;
 
 export function SettingsPage() {
-      return div({ style: `width: 600px; height: 80vh; ${column()}`, class: 'scroll' },
+      return div({ style: `width: 600px; height: 80vh; padding: 30px; ${column()}`, class: 'scroll' },
             button({ class: 'icon-btn', style: 'align-self: start;', click: () => Provider.of(Router).goto('/') }, 
                   icon({}, Icons.Back)
             ),

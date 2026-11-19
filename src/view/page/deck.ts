@@ -80,7 +80,7 @@ export function DeckPage() {
                         ),
                   )
             ),
-            div({ style: 'position: absolute; right: 0px; width: 300px; height: 100%;' },
+            div({ style: 'position: absolute; right: 15px; width: 300px; height: 100%;' },
                   react([cards], () => 
                         CardSearch({ cards: cards.value, click: add, deleted }),
                   )

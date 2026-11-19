@@ -129,9 +129,16 @@ export function Stylesheet() {
             .scroll {
                   overflow-x: hidden;
                   overflow-y: scroll;
+            }
+            .x-scroll {
+                  overflow-x: scroll;
+                  overflow-y: hidden;
+            }
+            .x-scroll, .scroll {
                   -ms-overflow-style: none;
                   scrollbar-width: none;
             }
+
 
             .pane {
                   min-width: 200px;
@@ -207,6 +214,7 @@ export function Stylesheet() {
                   box-shadow: var(--shadow);
             }
             .card {
+                  padding: 10px;
                   min-width: 350px;
                   width: 33%;
                   height: 70%;

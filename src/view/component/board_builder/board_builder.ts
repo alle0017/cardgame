@@ -4,53 +4,59 @@ import { Component, react, } from "../../lib/index.js"
 import { Provider } from "../../lib/provider.js";
 import { Router } from "../../lib/router.js";
 import { icon, Icons } from "../icons.js";
-import { column, row, Theme } from "../theme.js";
+import { column, Exception, row } from "../theme.js";
 import { List } from "./list.js";
 
 const { div, button, } = Component
 
+export function BoardComponent({ title, items, save, deleted }: { title: string, items: string[], save: (items: string[]) => void, deleted?: () => void }) {
+      return div({ class: 'card scroll', style: 'padding: 15px; align-items: start; width: 400px; min-width: 400px;' },
+            div({ style: `align-items: center; justify-content: center; ${row()}`, class: 'icon-btn-bar' },
+                  title,
+                  deleted ?
+                  button({ class: 'icon-btn', style: 'align-self: end;' , click: deleted },
+                        icon({},
+                              Icons.Trash
+                        )
+                  ): ''
+            ),
+            List({ value: items, save }),
+      );
+}
 export function BoardBuilder() {
       const board = getBoard();
       const rows = new Reactive(board.fields);
-      const container = `padding: 10px; border-radius: 7px; width: 450px; height: 400px; border: 1px solid ${Provider.of(Theme).primary}; ${column()}`;
       return div({ style: column() },
             div({ style: row() },
                   button({ class: 'icon-btn', click: () => Provider.of(Router).goto('/') }, 
                         icon({}, Icons.Back)
                   ),
             ),
-            div({ style: row() },
-                  div({ style: container},
-                        'Decks',
-                        List({ 
-                              value: board.decks,
-                              save: (items) => {
-                                    board.decks = items;
-                                    setBoard(board);
-                              }
-                        }),
-                  ),
-                  div({ style: container},
-                        'Shared stacks',
-                  
-                        List({ 
-                              value: board.shared,
-                              save: (items) => {
-                                    board.shared = items;
-                                    setBoard(board);
-                              }
-                        }),
-                  ),
-                  div({ style: container},
-                        'Game zones',
-                        List({ 
-                              value: board.zones,
-                              save: (items) => {
-                                    board.zones = items;
-                                    setBoard(board);
-                              }
-                        }),
-                  ),
+            div({ style: `width: 100vw; ${row()}`, class: 'x-scroll' },
+                  BoardComponent({ 
+                        title: 'Decks',
+                        items: board.decks,
+                        save: (items) => {
+                              board.decks = items;
+                              setBoard(board);
+                        }
+                  }),
+                  BoardComponent({
+                        title: 'Shared stacks',
+                        items: board.shared,
+                        save: (items) => {
+                              board.shared = items;
+                              setBoard(board);
+                        }
+                  }),
+                  BoardComponent({
+                        title: 'Game zones',
+                        items: board.zones,
+                        save: (items) => {
+                              board.zones = items;
+                              setBoard(board);
+                        }
+                  }),
             ),
             div({ style: column() },
                   button({ 
@@ -63,34 +69,25 @@ export function BoardBuilder() {
                         icon({}, Icons.AddRow)
                   ),
                   react([rows], () =>
-                        div({ style: row() },
+                        div({ style: `width: 100vw; ${row()}`, class: 'x-scroll' },
                               ...rows.value.map((r, i) => 
-                                    div({ style: container },
-                                          div({ style: row() },
-                                                `Field's row ${i}`,
-                                                button({ 
-                                                      class: 'icon-btn',
-                                                      click() {
-                                                            if (r.length != 0) {
-                                                                  return;
-                                                            }
-                                                            rows.value.splice(i, 1);
-                                                            rows.dispatch();
-                                                      }
-                                                }, 
-                                                      icon({},
-                                                            Icons.Trash
-                                                      )
-                                                ),
-                                          ),
-                                          List({ 
-                                                value: r,
-                                                save: (items) => {
-                                                      rows.value[i] = items;
-                                                      setBoard(board);
+                                    BoardComponent({
+                                          title: `Field's row ${i + 1}`,
+                                          items: r,
+                                          deleted: () => {
+                                                if (r.length != 0) {
+                                                      Exception('Cannot delete empty row')
+                                                      return;
                                                 }
-                                          }),
-                                    ),
+                                                rows.value.splice(i, 1);
+                                                setBoard(board);
+                                                rows.dispatch();
+                                          },
+                                          save: (items) => {
+                                                rows.value[i] = items;
+                                                setBoard(board);
+                                          }
+                                    })
                               )
                         )
                   )

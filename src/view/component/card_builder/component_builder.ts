@@ -66,8 +66,8 @@ export function ComponentBuilder() {
             }
       })
       return div({ style: row() },
-            div({ class: 'pane', style: 'position: fixed; top: 0; justify-content: start; padding-top: 20px; left: 0; background-color: var(--bg); z-index: 10000;' },
-                  div({ style: `align-items: center; ${row()}` },
+            div({ class: 'pane', style: 'position: fixed; top: 0; justify-content: start; align-items: start; padding: 10px; left: 0; background-color: var(--bg); z-index: 10000; width: 20%;' },
+                  div({ style: row() },
                         button({ class: 'icon-btn', click: () => Provider.of(Router).goto('/') }, 
                               icon({ }, Icons.Back)
                         ),
@@ -92,12 +92,12 @@ export function ComponentBuilder() {
                         )
                   )
             ),
-            div({ style: `overflow: scroll; width: calc(100vw - 600px);`}, 
+            div({ style: `overflow: scroll; width: calc(100vw - 600px); display: flex; justify-content: center; align-items: center;`}, 
                   react([root], () => 
                         Preview(root.value)
                   )
             ),
-            div({  class: 'pane', style: 'position: fixed; top: 0; right: 0; background-color: var(--bg); justify-content: start; padding-top: 20px;' },
+            div({  class: 'pane', style: 'position: fixed; top: 0; right: 0; background-color: var(--bg); justify-content: start;  align-items: start; padding: 10px; width: 20%;' },
                   react([focus], () => 
                         ComponentAttributes({ save: () => root.dispatch() },
                               focus.value

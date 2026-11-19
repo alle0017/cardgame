@@ -98,7 +98,7 @@ export function HomePage() {
                   Exception(e)
             }
       }
-      return div({ class: 'card', style: 'align-self: center; justify-self: center; padding: 20px;' },
+      return div({ class: 'card', style: 'align-self: center; justify-self: center;' },
             ...(FirebaseComponent.hasKey() ? [
                   input({ ...nickname.binding, placeholder: 'insert here your nickname' }), 
                   input({ ...opponent.binding, placeholder: 'insert here the opponent nickname'  }), 
