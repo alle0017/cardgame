@@ -3,7 +3,6 @@ import { CardState } from "./component/card.js";
 import { ComponentBuilder } from "./component/card_builder/component_builder.js";
 import { ZoneSelector } from "./component/player/zone_selector.js";
 import { Theme } from "./component/theme.js";
-import { style } from "./lib/index.js";
 import { Provider } from "./lib/provider.js";
 import { Router } from "./lib/router.js";
 import { BoardBuilderPage } from "./page/board_builder_page.js";
@@ -11,6 +10,7 @@ import { DeckPage } from "./page/deck.js";
 import { GamePage, GamePageParams } from "./page/game.js";
 import { HomePage } from "./page/home.js";
 import { SettingsPage } from "./page/settings.js";
+import { Stylesheet } from "./style.js";
 
 export function App() {
       Provider.set(CardState, new CardState);
@@ -26,54 +26,6 @@ export function App() {
             '/card_builder': ComponentBuilder,
       }, '/'))
 
-      style(/*css*/`
-            * {
-                  background-color: ${Provider.of(Theme).background};
-                  color: ${Provider.of(Theme).text};
-                  font-family: system-ui;
-            }
-            svg {
-                  background-color: transparent;
-            }
-            body {
-                  display: flex;
-                  flex-direction: column;
-                  align-items: center;
-                  justify-content: center;
-                  min-height: 90vh;
-            }
-            button, input, select {
-                  padding: 10px;
-                  border: none;
-                  background-color: ${Provider.of(Theme).accentPrimary};
-                  border-radius: 7px;
-                  border: 1px solid ${Provider.of(Theme).primary};
-            }     
-            button {
-                  text-transform: uppercase;
-                  width: 150px;
-            }
-            input, select {
-                  width: 300px;
-            }
-            button:hover {
-                  background-color: ${Provider.of(Theme).accentSecondary};
-                  color: ${Provider.of(Theme).textPrimary}
-            }     
-            input:focus, select:focus {
-                  outline: none;
-            }
-            .icon-btn {
-                  width: 32px;
-                  height: 32px;
-                  display: flex;
-                  align-items: center;
-                  justify-content: center;
-                  background-color: ${Provider.of(Theme).accentPrimary};
-            }
-            .icon-btn:hover {
-                  background-color: ${Provider.of(Theme).accentSecondary};
-            }
-      `)
+      Stylesheet();
       Provider.of(Router).mount();
 }

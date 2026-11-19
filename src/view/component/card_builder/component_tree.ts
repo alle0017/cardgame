@@ -46,16 +46,15 @@ export function ComponentTree({ up, down, updated, selected, deleted }: Props, c
             child.children.splice(i, 1)
             updated();
       }
-      const btnStyle = `justify-contents: center; border: none; align-items: center; width: 32px; height: 32px; ${column()}`;
       return div({ style: column() },
             div({}, 
                   div({ style: `height: 32px; align-items: center; ${row()}` },
                         div({ style: 'width: 100px;', click: select },
                               child.name,
                         ),
-                        button({ click: createNew, style: btnStyle }, '+'),
-                        up ? button({ click: up, style: btnStyle }, '↑'): '',
-                        down ? button({ click: down, style: btnStyle }, '↓'): '',
+                        button({ click: createNew, class: 'icon-btn' }, '+'),
+                        up ? button({ click: up, class: 'icon-btn' }, '↑'): '',
+                        down ? button({ click: down, class: 'icon-btn' }, '↓'): '',
                         deleted ? button({ click: deleted, class: 'icon-btn' }, 
                               icon({}, 
                                     Icons.Trash

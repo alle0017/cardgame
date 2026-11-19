@@ -66,7 +66,7 @@ export function ComponentBuilder() {
             }
       })
       return div({ style: row() },
-            div({ style: `overflow-y: scroll; height: 99vh; width: 300px; border-right: 2px solid ${Provider.of(Theme).primary}`},
+            div({ class: 'pane', style: 'position: fixed; top: 0; left: 0; background-color: var(--bg); z-index: 10000;' },
                   div({ style: `align-items: center; ${row()}` },
                         button({ class: 'icon-btn', click: () => Provider.of(Router).goto('/') }, 
                               icon({ }, Icons.Back)
@@ -92,12 +92,12 @@ export function ComponentBuilder() {
                         )
                   )
             ),
-            div({ style: `width: calc(90vw - 305px - 405px); overflow: scroll;`}, 
+            div({ style: `overflow: scroll;`}, 
                   react([root], () => 
                         Preview(root.value)
                   )
             ),
-            div({ style: `overflow-y: scroll; height: 99vh; width: 400px; padding: 20px; border-left: 2px solid ${Provider.of(Theme).primary}`},
+            div({  class: 'pane', style: 'position: fixed; top: 0; right: 0; background-color: var(--bg);' },
                   react([focus], () => 
                         ComponentAttributes({ save: () => root.dispatch() },
                               focus.value

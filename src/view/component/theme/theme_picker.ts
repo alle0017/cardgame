@@ -11,7 +11,7 @@ function ColorPicker({ color, label, onInput }: { color: string, label: string, 
             input({ 
                   type: 'color', 
                   value: color, 
-                  style: 'height: 32px; width: 32px; padding: 0px;',
+                  style: 'height: 32px; width: 32px; min-width: 32px; padding: 0px;',
                   input: onInput
             }),
             span({ }, label)
@@ -51,7 +51,7 @@ export function ThemePicker() {
                   ),
                   button({ class: 'icon-btn', click: () => theme.update() }, 
                         icon({},
-                              Icons.Upload
+                              Icons.Save
                         )
                   )
             )
