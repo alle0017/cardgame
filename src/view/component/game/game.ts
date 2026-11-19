@@ -1,15 +1,17 @@
 import * as model from "../../../model/game.js";
 import { Component, } from "../../lib/index.js";
 import { Provider } from "../../lib/provider.js";
+import { Router } from "../../lib/router.js";
 import { CardPicker } from "../card_picker/card_picker.js";
 import { CardPreview } from "../card_preview/card_preview.js";
 import { Options } from "../context_menu/context_menu.js";
+import { icon, Icons } from "../icons.js";
 import { LocalPlayer } from "../player/local_player.js";
 import { RemotePlayer } from "../player/remote_player.js";
 import { Stack } from "../stack/stack.js";
 import { column, row } from "../theme.js";
 
-const { div } = Component;
+const { div, button } = Component;
 
 function StackOptions(id: string): Options {
       const opts: Options = {};
@@ -43,8 +45,15 @@ function StackOptions(id: string): Options {
       }
 } 
 export function Game({ model }: { model: model.Game }) {
-      return div({ style: `width: 90vw; align-items: center; ${row('20%')}` },
-            CardPreview({}),
+      return div({ style: `width: 90vw; align-items: center; ${row('10%')}` },
+            div({  class: 'box', style: 'padding: 50px; height: 80vh; gap: 50px; display: flex; flex-direction: column;'  },
+                  div({ style: row(), class: 'icon-btn-bar' },
+                        button({ class: 'icon-btn', click: () => Provider.of(Router).goto('/') }, 
+                              icon({ }, Icons.Back)
+                        )
+                  ),
+                  CardPreview({}),
+            ),
             div({ style: `align-items: center; ${column()}` },
                   RemotePlayer({ model: model.remote }),
                   div({ style: column() },

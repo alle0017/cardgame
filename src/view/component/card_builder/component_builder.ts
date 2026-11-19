@@ -1,6 +1,6 @@
 import { ComponentTree } from "./component_tree.js";
 import { Component, react, } from "../../lib/index.js";
-import { Exception, row, Theme } from "../theme.js";
+import { Exception, row, } from "../theme.js";
 import { Provider } from "../../lib/provider.js";
 import { Reactive } from "../../../model/lib/reactive.js";
 import { ComponentAttributes } from "./component_attributes.js";
