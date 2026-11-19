@@ -1,7 +1,7 @@
 import { DeckService } from "../../service/deck.js";
 import { CardSearch } from "../component/card_search/card_search.js";
 import { Table } from "../component/table/table.js";
-import { column, row, Theme } from "../component/theme.js";
+import { column, Exception, row, Theme } from "../component/theme.js";
 import { Component, react, bind } from "../lib/index.js";
 import { Provider } from "../lib/provider.js";
 import { Reactive } from '../../model/lib/reactive.js';
@@ -19,7 +19,7 @@ export function DeckPage() {
       const name = bind();
       const Input = input({ ...name.binding, placeholder: 'insert here the deck name' }) as HTMLInputElement;
 
-      Provider.of(DeckService).getAllCards().then(stored => cards.value = stored).catch(console.error);
+      Provider.of(DeckService).getAllCards().then(stored => cards.value = stored).catch(Exception);
       
 
       function add(card: Card) {
@@ -37,20 +37,16 @@ export function DeckPage() {
             name.value = model.name;
       }
       async function save(e: Event) {
-            const btn = e.target as HTMLElement;
             if (!name.value.replaceAll(' ', '')) {
-                  btn.style.borderColor = Provider.of(Theme).error;
-                  console.error('invalid naming', name.value);
+                  Exception(`invalid name "${name.value}"`)
                   return;
             }
 
             try {
                   await Provider.of(DeckService).createDeck(name.value, deck.value);
             } catch (e) {
-                  console.error(e)
-                  btn.style.border = Provider.of(Theme).error;
+                  Exception(e)
             }
-            btn.style.borderColor = Provider.of(Theme).primary;
       }
       function sort() {
             deck.value.sort((a,b) => a.img.localeCompare(b.img))
@@ -59,7 +55,7 @@ export function DeckPage() {
 
       async function deleted(card: Card) {
             await Provider.of(DeckService).deleteCard({ ...card, _auto: crypto.randomUUID() });
-            Provider.of(DeckService).getAllCards().then(stored => cards.value = stored).catch(console.error);
+            Provider.of(DeckService).getAllCards().then(stored => cards.value = stored).catch(Exception);
       }
       return div({ style: `width: 100%; height: 80vh; padding: 20px; ${row('20px')}` },
             div({ style: `padding: 20px; ${column('20px')}` },

@@ -3,6 +3,7 @@ import { Component, react, } from "../../lib/index.js";
 import { Provider } from "../../lib/provider.js";
 import { Reactive } from '../../../model/lib/reactive.js';
 import { DeckModel } from "../../../service/store.js";
+import { Exception } from "../theme.js";
 
 const { select, option } = Component;
 
@@ -15,7 +16,7 @@ export function DeckSelector({ deckSelected, placeholder }: { deckSelected?: (mo
                   map.set(deck.name, deck);
             }
             decks.value = map;
-      }).catch(console.error);
+      }).catch(Exception);
 
       function change(e: Event) {
             const text = (e.target as HTMLSelectElement).value;

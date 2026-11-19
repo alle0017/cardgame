@@ -1,6 +1,6 @@
 import { ComponentTree } from "./component_tree.js";
 import { Component, react, } from "../../lib/index.js";
-import { row, Theme } from "../theme.js";
+import { Exception, row, Theme } from "../theme.js";
 import { Provider } from "../../lib/provider.js";
 import { Reactive } from "../../../model/lib/reactive.js";
 import { ComponentAttributes } from "./component_attributes.js";
@@ -22,7 +22,7 @@ export function ComponentBuilder() {
       repo
       .getAll()
       .then(res => options.value = res)
-      .catch(console.error);
+      .catch(Exception);
 
       root.subscribe(async () => {
             await repo.insertOrUpdate(root.value);

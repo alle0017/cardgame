@@ -3,7 +3,7 @@ import { FirebaseComponent } from "../../model/lib/firebase/firebase.js";
 import { DeckService } from "../../service/deck.js";
 import { DeckModel } from "../../service/store.js";
 import { DeckSelector } from "../component/deck_selector/deck_selector.js";
-import { column, Theme } from "../component/theme.js";
+import { column, Exception, Theme } from "../component/theme.js";
 import { Component, bind } from "../lib/index.js";
 import { Provider } from "../lib/provider.js";
 import { Router } from "../lib/router.js";
@@ -48,7 +48,7 @@ async function importNewCards() {
       const service = Provider.of(DeckService);
       const cards = await importImages();
       for (const card of cards) {
-            service.createCard({ id: 0, ...card }).catch(console.error);
+            service.createCard({ id: 0, ...card }).catch(Exception);
       }
 }
 export function HomePage() {
@@ -80,7 +80,7 @@ export function HomePage() {
                         board
                   } satisfies GamePageParams);
             } catch (e) {
-                  console.error(e)
+                  Exception(e)
             }
             
       }
@@ -95,7 +95,7 @@ export function HomePage() {
                         board
                   } satisfies GamePageParams);
             } catch (e) {
-                  console.error(e)
+                  Exception(e)
             }
       }
       return div({ class: 'card', style: 'align-self: center; justify-self: center; padding: 20px;' },

@@ -3,6 +3,7 @@ import { FirebaseComponent } from "../../model/lib/firebase/firebase.js";
 import { DeckService } from "../../service/deck.js";
 import { Provider } from "../lib/provider.js";
 import { CardTemplateRepository, AST } from "../../service/store.js";
+import { Exception } from "../component/theme.js";
 
 type State = {
       cards: Card[],
@@ -101,6 +102,6 @@ export async function importSettings() {
             const state = parseState(await file.text());
             await importState(state);
       } catch (e) {
-            console.error(e);
+            Exception(e);
       }
 }

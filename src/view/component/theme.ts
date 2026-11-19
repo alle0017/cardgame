@@ -37,3 +37,14 @@ export class Theme {
 
 export const row = (gap = '10px') => `display: flex; flex-direction: row; gap: ${gap};`
 export const column = (gap = '10px', reverse: boolean = false) => `display: flex; flex-direction: ${reverse ? 'column-reverse' : 'column'}; gap: ${gap};`
+export function Exception(e: unknown, timeout = 3000) {
+      const div = document.createElement('div');
+      div.classList.add('toast');
+      if (e instanceof Error) {
+            div.innerText = e.message;
+      } else {
+            div.innerText = e?.toString() ?? 'An error occurred';
+      }
+      document.body.append(div);
+      setTimeout(() => div.remove(), timeout)
+}

@@ -1,7 +1,7 @@
 
 import { FirebaseComponent } from "../../../model/lib/firebase/firebase.js";
 import { Component, bind, } from "../../lib/index.js";
-import { row } from "../theme.js";
+import { Exception, row } from "../theme.js";
 import { FirebaseGuide } from "./firebase_guide.js";
 
 const { summary, details, p, input, button, hr, div } = Component;
@@ -15,7 +15,7 @@ export function CloudKeyInput() {
                         FirebaseComponent.setKey(key.value);
                   }
             } catch (e) {
-                  console.error(e);
+                  Exception(e)
             }
       }
 
