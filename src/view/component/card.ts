@@ -1,6 +1,7 @@
 import { Component } from "../lib/index.js";
 import { Provider } from "../lib/provider.js";
 import { Theme } from "./theme.js";
+import { Reactive } from '../../model/lib/reactive.js';
 
 const { div, img } = Component
 export class CardState {
@@ -10,14 +11,28 @@ export class CardState {
       get height() {
             return 86 * this.scale;
       }
-      scale = 3;
+      scale = 1;
+
+      selected: Reactive<string | undefined> = new Reactive(undefined);
 }
 
-export function Card({ src, click }: { src?: string, click?: () => void }) {
+export function Card({ src, click, width, height }: { src?: string, width?: string, height?: string, click?: () => void }) {
       const size = Provider.of(CardState);
-      const style = `width: ${size.width}px; height: ${size.height}px; border: 1px solid ${Provider.of(Theme).primary}; border-radius: 7px;`;
+      width ??= `${size.width}px`;
+      height ??= `${size.height}px`;
+      const style = `width: ${width}; height: ${height}; border: 1px solid ${Provider.of(Theme).primary}; border-radius: 7px;`;
+
       if (src) {
-            return img({ style, src, click })
+            function mouseenter() {
+                  size.selected.value = src;
+            }
+
+            function mouseout() {
+                  if (size.selected.value && size.selected.value == src) {
+                        size.selected.value = undefined;
+                  }
+            }
+            return img({ style, src, click, mouseenter, mouseout })
       }
       return div({ style, click })
 }
