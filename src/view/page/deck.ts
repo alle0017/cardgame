@@ -1,14 +1,13 @@
 import { DeckService } from "../../service/deck.js";
 import { CardSearch } from "../component/card_search/card_search.js";
 import { Table } from "../component/table/table.js";
-import { column, Exception, row, Theme } from "../component/theme.js";
+import { column, Exception, row } from "../component/theme.js";
 import { Component, react, bind } from "../lib/index.js";
 import { Provider } from "../lib/provider.js";
 import { Reactive } from '../../model/lib/reactive.js';
 import { DeckModel } from "../../service/store.js";
 import { DeckSelector } from "../component/deck_selector/deck_selector.js";
 import { CardState } from "../component/card.js";
-import { Router } from "../lib/router.js";
 import { icon, Icons } from "../component/icons.js";
 
 const { div, input, button, } = Component;
@@ -60,9 +59,6 @@ export function DeckPage() {
       return div({ style: `width: 100%; height: 80vh; padding: 20px; ${row('20px')}` },
             div({ style: `padding: 20px; ${column('20px')}` },
                   div({ style: `align-items: center; ${row('10px')}` },
-                        button({ class: 'icon-btn', click: () => Provider.of(Router).goto('/') },
-                              icon({}, Icons.Back)
-                        ),
                         Input,
                         DeckSelector({ placeholder: 'select the deck', deckSelected: loadDeck }),
                         button({ class: 'icon-btn', click: save },

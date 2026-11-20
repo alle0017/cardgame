@@ -9,7 +9,6 @@ import { AST, CardTemplateRepository } from "../../../service/store.js";
 import { icon, Icons } from "../icons.js";
 import { saveAsImage } from "./image.service.js";
 import { DeckService } from "../../../service/deck.js";
-import { Router } from "../../lib/router.js";
 import { fileAsDataUrl } from "./clipboard.service.js";
 
 const { div, select, option, button } = Component;
@@ -65,12 +64,9 @@ export function ComponentBuilder() {
                   return;
             }
       })
-      return div({ style: row() },
-            div({ class: 'pane', style: 'position: fixed; top: 0; justify-content: start; align-items: start; padding: 10px; left: 0; background-color: var(--bg); z-index: 10000; width: 20%;' },
+      return div({ style: `width: 99vw; ${row()}` },
+            div({ class: 'pane xy-scroll', style: 'justify-content: start; align-items: start; padding: 30px; padding-left: 10px; background-color: var(--bg); width: 20%; min-height: calc(100vh - 104px);' },
                   div({ style: row() },
-                        button({ class: 'icon-btn', click: () => Provider.of(Router).goto('/') }, 
-                              icon({ }, Icons.Back)
-                        ),
                         react([options], () =>
                               select({ change: load, style: `width: 160px;` },
                                     option({ value: "" }, "New..."),
@@ -97,7 +93,7 @@ export function ComponentBuilder() {
                         Preview(root.value)
                   )
             ),
-            div({  class: 'pane', style: 'position: fixed; top: 0; right: 0; background-color: var(--bg); justify-content: start;  align-items: start; padding: 10px; width: 20%;' },
+            div({  class: 'pane xy-scroll', style: 'background-color: var(--bg); justify-content: start; border-right: none; box-shadow: none; align-items: start; padding: 30px; width: 20%; height: calc(100vh - 104px);' },
                   react([focus], () => 
                         ComponentAttributes({ save: () => root.dispatch() },
                               focus.value

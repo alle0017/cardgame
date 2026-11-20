@@ -3,7 +3,7 @@ import { AST } from "../../../service/store.js";
 import { Component, react } from "../../lib/index.js";
 import { Provider } from "../../lib/provider.js";
 import { icon, Icons } from "../icons.js";
-import { column, row, Theme } from "../theme.js";
+import { column, Theme } from "../theme.js";
 
 const { div, button } = Component;
 
@@ -63,7 +63,7 @@ export function ComponentTree({ up, down, updated, selected, deleted }: Props, c
                   )
             ),
             react([signal], () =>
-                  div({ style: `padding-left: 5px; border-left: 2px solid ${Provider.of(Theme).primary}; ${column()}` },
+                  div({ style: `padding-left: 5px; border-left: 2px solid ${Provider.of(Theme).text}; ${column()}` },
                         ...child.children.filter(() => signal.value).map((node, i) => 
                               ComponentTree({ 
                                     deleted: () => deleteChild(i),

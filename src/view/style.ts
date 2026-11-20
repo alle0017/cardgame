@@ -143,6 +143,25 @@ export function Stylesheet() {
                   scrollbar-width: none;
             }
 
+            .top-bar {
+                  width: 100vw;
+                  height: 35px !important;
+                  box-sizing: border-box;
+                  display: flex; 
+                  flex-direction: row;
+                  gap: 10px;
+                  position: fixed;
+                  top: 0px;
+                  left: 0px;
+                  border: var(--border);
+                  box-shadow: var(--shadow);
+            }
+
+            .content {
+                  height: calc(100vh - 32px);
+                  width: 100vw;
+                  padding: 48px;
+            }
 
             .pane {
                   min-width: 200px;

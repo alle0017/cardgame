@@ -20,7 +20,7 @@ export function Card({ src, click, width, height }: { src?: string, width?: stri
       const size = Provider.of(CardState);
       width ??= `${size.width}px`;
       height ??= `${size.height}px`;
-      const style = `width: ${width}; height: ${height}; border: 1px solid ${Provider.of(Theme).primary}; border-radius: 7px;`;
+      const style = `width: ${width}; height: ${height}; border: 1px solid ${Provider.of(Theme).text}; border-radius: 7px;`;
 
       if (src) {
             function mouseenter() {

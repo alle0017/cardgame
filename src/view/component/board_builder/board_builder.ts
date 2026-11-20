@@ -1,8 +1,6 @@
 import { getBoard, setBoard } from "../../../model/game.js";
 import { Reactive } from "../../../model/lib/reactive.js";
 import { Component, react, } from "../../lib/index.js"
-import { Provider } from "../../lib/provider.js";
-import { Router } from "../../lib/router.js";
 import { icon, Icons } from "../icons.js";
 import { column, Exception, row } from "../theme.js";
 import { List } from "./list.js";
@@ -27,11 +25,6 @@ export function BoardBuilder() {
       const board = getBoard();
       const rows = new Reactive(board.fields);
       return div({ style: column() },
-            div({ style: row() },
-                  button({ class: 'icon-btn', click: () => Provider.of(Router).goto('/') }, 
-                        icon({}, Icons.Back)
-                  ),
-            ),
             div({ style: `width: 100vw; ${row()}`, class: 'x-scroll' },
                   BoardComponent({ 
                         title: 'Decks',
