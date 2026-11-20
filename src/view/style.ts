@@ -160,7 +160,10 @@ export function Stylesheet() {
             .content {
                   height: calc(100vh - 32px);
                   width: 100vw;
-                  padding: 48px;
+                  padding: 32px;
+                  align-items: center;
+                  display: flex;
+                  flex-direction: column;
             }
 
             .pane {

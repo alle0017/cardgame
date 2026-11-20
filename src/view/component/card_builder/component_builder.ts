@@ -65,7 +65,7 @@ export function ComponentBuilder() {
             }
       })
       return div({ style: `width: 99vw; ${row()}` },
-            div({ class: 'pane xy-scroll', style: 'justify-content: start; align-items: start; padding: 30px; padding-left: 10px; background-color: var(--bg); width: 20%; min-height: calc(100vh - 104px);' },
+            div({ class: 'pane xy-scroll', style: 'justify-content: start; align-items: start; padding: 10px; border-left: none; background-color: var(--bg); width: 20%; min-height: calc(100vh - 104px);' },
                   div({ style: row() },
                         react([options], () =>
                               select({ change: load, style: `width: 160px;` },
