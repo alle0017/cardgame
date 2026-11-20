@@ -136,7 +136,7 @@ export function Stylesheet() {
             }
             .xy-scroll {
                   overflow-x: scroll;
-                  overflow-y: hidden;
+                  overflow-y: scroll;
             }
             .x-scroll, .scroll, .xy-scroll {
                   -ms-overflow-style: none;
