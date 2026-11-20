@@ -4,7 +4,7 @@ import { Component } from "../lib/index.js";
 const { div } = Component;
 
 export function BoardBuilderPage() {
-      return div({ style: 'padding: 20px; width: 100vw; padding-left: 100px;' },
+      return div({ style: 'padding: 20px; width: 100vw; padding-left: 100px;', class: 'scroll' },
             BoardBuilder()
       )
 }
