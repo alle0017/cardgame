@@ -56,7 +56,7 @@ export function DeckPage() {
             await Provider.of(DeckService).deleteCard({ ...card, _auto: crypto.randomUUID() });
             Provider.of(DeckService).getAllCards().then(stored => cards.value = stored).catch(Exception);
       }
-      return div({ style: `width: 100%; height: 80vh; padding: 20px; ${row('20px')}` },
+      return div({ style: `width: 100%; height: 80vh; padding: 20px; justify-content: center; ${row('20px')}` },
             div({ style: `padding: 20px; ${column('20px')}` },
                   div({ style: `align-items: center; ${row('10px')}` },
                         Input,
@@ -76,7 +76,7 @@ export function DeckPage() {
                         ),
                   )
             ),
-            div({ style: 'position: absolute; right: 15px; width: 300px; height: 100%;' },
+            div({ style: 'width: 300px; height: 100%;' },
                   react([cards], () => 
                         CardSearch({ cards: cards.value, click: add, deleted }),
                   )

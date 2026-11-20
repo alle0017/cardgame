@@ -44,7 +44,7 @@ function StackOptions(id: string): Options {
 } 
 export function Game({ model }: { model: model.Game }) {
       return div({ style: `width: 90vw; align-items: center; ${row('10%')}` },
-            div({  class: 'box', style: 'padding: 50px; height: 80vh; gap: 50px; display: flex; flex-direction: column;'  },
+            div({  class: 'box', style: 'padding: 50px; height: 60vh; gap: 50px; display: flex; flex-direction: column;'  },
                   CardPreview({}),
             ),
             div({ style: `align-items: center; ${column()}` },

@@ -17,7 +17,7 @@ export function CardPicker(cards: Card[]): Promise<Card> {
                   reject(new Error('no card was picked'));
                   menu.remove();
             }
-            const menu = div({ style: `z-index: 10000; width: 850px; padding: 20px; border-radius: 7px; height: ${size.height + 100}px; position: fixed; top: calc(50% - ${size.height}px/2); left: 10vw; border: 1px solid ${theme.primary}` },
+            const menu = div({ style: `z-index: 10000; background-color: var(--bg); width: 850px; padding: 20px; border-radius: 7px; height: ${size.height + 100}px; position: fixed; top: calc(50% - ${size.height}px/2); left: 10vw; border: var(--border); box-shadow: var(--shadow);` },
                   div({ style: `width: 100%; align-items: end; height: 32px; ${column()}` },
                         div({ style: `width: 32px; height: 32px; border-radius: 7px; font-size: 28px; display: flex; align-items: end; justify-content: center; border: 1px solid ${theme.primary}`, click: close },
                               '⨯'

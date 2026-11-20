@@ -65,7 +65,7 @@ export function ComponentBuilder() {
             }
       })
       return div({ style: `width: 99vw; ${row()}` },
-            div({ class: 'pane xy-scroll', style: 'justify-content: start; align-items: start; padding: 10px; border-left: none; background-color: var(--bg); width: 20%; min-height: calc(100vh - 104px);' },
+            div({ class: 'card xy-scroll', style: 'justify-content: start; align-items: start; padding: 30px; margin-left: 20px; background-color: var(--bg); width: 30%; height: 80vh; min-width: max-content;' },
                   div({ style: row() },
                         react([options], () =>
                               select({ change: load, style: `width: 160px;` },
@@ -93,7 +93,7 @@ export function ComponentBuilder() {
                         Preview(root.value)
                   )
             ),
-            div({  class: 'pane xy-scroll', style: 'background-color: var(--bg); justify-content: start; border-right: none; box-shadow: none; align-items: start; padding: 30px; width: 20%; height: calc(100vh - 104px);' },
+            div({  class: 'card xy-scroll', style: 'background-color: var(--bg); justify-content: start; align-items: start; padding: 30px; width: 20%; height: 80vh;' },
                   react([focus], () => 
                         ComponentAttributes({ save: () => root.dispatch() },
                               focus.value

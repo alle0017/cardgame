@@ -3,7 +3,7 @@ import { FirebaseComponent } from "../../model/lib/firebase/firebase.js";
 import { DeckService } from "../../service/deck.js";
 import { DeckModel } from "../../service/store.js";
 import { DeckSelector } from "../component/deck_selector/deck_selector.js";
-import { column, Exception, Theme } from "../component/theme.js";
+import { Exception } from "../component/theme.js";
 import { Component, bind } from "../lib/index.js";
 import { Provider } from "../lib/provider.js";
 import { Router } from "../lib/router.js";
@@ -53,7 +53,6 @@ async function importNewCards() {
 }
 export function HomePage() {
       const board = getBoard();
-      const theme = Provider.of(Theme);
       const nickname = bind();
       const opponent = bind();
       const game = bind();
@@ -98,7 +97,7 @@ export function HomePage() {
                   Exception(e)
             }
       }
-      return div({ class: 'card', style: 'align-self: center; justify-self: center;' },
+      return div({ class: 'card', style: 'height: 500px;' },
             ...(FirebaseComponent.hasKey() ? [
                   input({ ...nickname.binding, placeholder: 'insert here your nickname' }), 
                   input({ ...opponent.binding, placeholder: 'insert here the opponent nickname'  }), 

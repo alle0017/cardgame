@@ -81,8 +81,17 @@ export function Stylesheet() {
             select:focus {
                   outline: none;
             }
+            .context-menu {
+                  width: 250px;
+                  height: 150px;
+                  overflow-y: scroll;
+                  overflow-x: hidden;
+                  display: flex;
+                  flex-direction: column;
+                  gap: 5px;
+            }
 
-            select {
+            select, .context-menu {
                   background-color: var(--primary);
             }
 
@@ -93,13 +102,15 @@ export function Stylesheet() {
                   }
             }
 
-            select:open::picker(select) {
+            select:open::picker(select), .context-menu {
                   border: var(--border);
                   border-radius: 4px;
                   padding: 5px;
                   box-sizing: border-box;
+                  box-shadow: var(--shadow);
             }
 
+            .context-menu-option:hover,
             option:hover {
                   background-color: var(--bg-emphasis);
             }
@@ -115,8 +126,11 @@ export function Stylesheet() {
             select:open::picker-icon {
                   rotate: 180deg;
             }
+            .context-menu-option {
+                  padding: 4px;
+            }
 
-            option {
+            option, .context-menu-option {
                   border-radius: 4px;
                   background-color: var(--bg);
             }
@@ -138,7 +152,7 @@ export function Stylesheet() {
                   overflow-x: scroll;
                   overflow-y: scroll;
             }
-            .x-scroll, .scroll, .xy-scroll {
+            .x-scroll, .scroll, .xy-scroll, .context-menu {
                   -ms-overflow-style: none;
                   scrollbar-width: none;
             }
@@ -160,7 +174,8 @@ export function Stylesheet() {
             .content {
                   height: calc(100vh - 32px);
                   width: 100vw;
-                  padding: 32px;
+                  padding: 30px;
+                  padding-top: 100px;
                   align-items: center;
                   display: flex;
                   flex-direction: column;
@@ -183,7 +198,7 @@ export function Stylesheet() {
                   box-shadow: var(--shadow);
             }
 
-            .pane::-webkit-scrollbar, .scroll::-webkit-scrollbar {
+            *::-webkit-scrollbar {
                   display: none;
             }
 

@@ -1,6 +1,5 @@
-import { Component } from "../../lib/index.js";
-import { Provider } from "../../lib/provider.js";
-import { column, Theme } from "../theme.js";
+import { Component, } from "../../lib/index.js";
+import { Exception, } from "../theme.js";
 
 const { div } = Component;
 
@@ -24,64 +23,20 @@ export class ContextMenu {
 
             this.lock();
 
-            const theme = Provider.of(Theme);
             const box = root.getBoundingClientRect();
-
-            const menu = div({
-                  style: `
-                        position: fixed;
-                        left: ${box.left}px;
-                        top: ${box.bottom + 4}px;
-                        min-width: 190px;
-                        max-width: 280px;
-                        padding: 4px;
-                        box-sizing: border-box;
-                        color: ${theme.fg};
-                        border: 1px solid ${theme.primary};
-                        border-radius: 8px;
-                        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4),
-                                    0 2px 6px rgba(0, 0, 0, 0.2);
-                        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-                        font-size: 13px;
-                        font-weight: 400;
-                        z-index: 10000;
-                        overflow-y: auto;
-                        max-height: 300px;
-                        user-select: none;
-                        ${column('2px')}
-                  `
-            },
+            const menu = div({ class: 'context-menu', style: `position: fixed; left: ${box.left}px; top: ${box.bottom + 4}px;` },
                   ...Object.entries(options).map(([label, callback]) =>
-                        div({
-                              style: `
-                                    display: flex;
-                                    align-items: center;
-                                    box-sizing: border-box;
-                                    width: 100%;
-                                    min-height: 30px;
-                                    padding: 0 10px;
-                                    border-radius: 5px;
-                                    color: ${theme.text};
-                                    background: transparent;
-                                    text-align: left;
-                                    white-space: nowrap;
-                                    cursor: default;
-                                    transition: background-color 100ms ease;
-                              `,
-                              mouseenter: event => {
-                                    const el = (event.currentTarget as HTMLElement);
-                                    el.style.backgroundColor = theme.primary;
-                                    el.style.color = theme.fgPrimary;
-                              },
-                              mouseleave: event => {
-                                    const el = (event.currentTarget as HTMLElement);
-                                    el.style.backgroundColor = "transparent";
-                                    el.style.color = theme.text;
-                              },
-                              click: () => {
+                        div({ class: 'context-menu-option',
+                              click: async () => {
                                     try {
-                                          callback?.(ctx);
-                                    } finally {
+                                          const promise = callback?.(ctx);
+                                          menu.remove();
+                                          this.unlock();
+                                          if (promise) {
+                                                await promise;
+                                          }
+                                    } catch(e) {
+                                          Exception(e)
                                           menu.remove();
                                           this.unlock();
                                     }
@@ -92,7 +47,6 @@ export class ContextMenu {
 
             document.body.append(menu);
 
-            // Keep the menu inside the viewport.
             const bounds = menu.getBoundingClientRect();
 
             if (bounds.right > window.innerWidth - 8) {
@@ -103,12 +57,10 @@ export class ContextMenu {
                   menu.style.top = `${Math.max(8, box.top - bounds.height - 4)}px`;
             }
 
-            // Close the menu when clicking elsewhere or pressing Escape.
             const close = () => {
                   menu.remove();
                   this.unlock();
                   document.removeEventListener("mousedown", onOutsideClick);
-                  document.removeEventListener("keydown", onKeyDown);
             };
 
             const onOutsideClick = (event: MouseEvent) => {
@@ -117,13 +69,6 @@ export class ContextMenu {
                   }
             };
 
-            const onKeyDown = (event: KeyboardEvent) => {
-                  if (event.key === "Escape") {
-                        close();
-                  }
-            };
-
             document.addEventListener("mousedown", onOutsideClick);
-            document.addEventListener("keydown", onKeyDown);
       }
 }
